@@ -20,12 +20,12 @@ typedef struct Entry Entry;
 
 int main(int argc, const char * argv[]) {
     
-    char* file = "text.txt" ;
+    char* file = "source.txt" ;
     
+    //int result = addWord(file);
     
-    int result = addWord(file);
-    
-    printf("%d",result);
+    findWord(file);
+    //printf("%d\n",result);
     
     
     return 0;

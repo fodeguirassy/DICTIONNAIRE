@@ -13,5 +13,8 @@
 
 /* Prototypes of functions */
 int addWord(char* filename);
+void findWord(char* filename);
+int linesNumber(FILE* file);
+char* readFromStdin(char *message);
 
 #endif /* functions_h */
