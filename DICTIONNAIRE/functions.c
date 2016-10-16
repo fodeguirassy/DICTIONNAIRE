@@ -10,10 +10,17 @@
 
 /* Functions */
 
-int addWord(){
+int addWord(char* filename, char* word){
     int result = 0;
     
+    FILE* file = fopen(filename,"a+");
     
+    if(file){
+        result = 1;
+        printf("%d",result);
+    }
+        
+    fclose(file);
     
     return result;
 }

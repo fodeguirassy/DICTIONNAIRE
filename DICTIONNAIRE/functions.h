@@ -12,5 +12,6 @@
 #include <stdio.h>
 
 /* Prototypes of functions */
+int addWord(char* filename, char* word);
 
 #endif /* functions_h */
