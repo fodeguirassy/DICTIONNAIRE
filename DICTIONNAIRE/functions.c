@@ -9,3 +9,11 @@
 #include "functions.h"
 
 /* Functions */
+
+int addWord(){
+    int result = 0;
+    
+    
+    
+    return result;
+}
