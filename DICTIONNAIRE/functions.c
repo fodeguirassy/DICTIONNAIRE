@@ -10,14 +10,22 @@
 
 /* Functions */
 
-int addWord(char* filename, char* word){
+int addWord(char* filename){
     int result = 0;
     
-    FILE* file = fopen(filename,"a+");
+    FILE* file = fopen(filename,"w+");
+    
+    char* word = malloc(sizeof(char) * 56);
+    
+    printf("Saisissez un mot");
+    scanf("%s",word);
+
     
     if(file){
+        //fscanf(file,"%s",word);
+        fputs(word,file);
         result = 1;
-        printf("%d",result);
+        
     }
         
     fclose(file);
