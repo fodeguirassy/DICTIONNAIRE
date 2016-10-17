@@ -32,44 +32,17 @@ int addWord(char* filename){
     return result;
 }
 void findWord(char* filename){
-    int result = 0;
     
     FILE* file = fopen(filename, "r");
     if(file){
-        
-        int i = 0;
-        char c;
-        int j = 0;
-        
-        while((c = fgetc(file)) != EOF){
-            char answer[20];
-            if(c == '\n'){
-                i++;
-            }
-            else{
-                answer[j]= c;
-                j++;
-            }
+        //char* word;
+        //word = readFromStdin("A WORD TO FIND");
+        char answer[255];
+        while((fgets(answer, 255, file))){
             printf("%s\n",answer);
         }
         
-        printf("FILE LENGTH %d\n",i);
-        
-    
-        
-    
-        
-        //char* word;
-        //word = readFromStdin("A WORD TO FIND");
-        //char* string;
-        //char answer[20];
-        //string = fgets(answer,20,file);
-        //printf("%s",word);
-        
-        result = 1;
     }
-    printf("%d\n",result);
-    
 }
 
 int linesNumber(FILE* file){
