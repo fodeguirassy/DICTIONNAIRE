@@ -11,21 +11,11 @@
 #include <string.h>
 #include "functions.h"
 
-struct Entry{
-    char word[100];
-    char description[600];
-};
-
-typedef struct Entry Entry;
-
 int main(int argc, const char * argv[]) {
     
     char* file = "source.txt" ;
     
-    //int result = addWord(file);
-    
     findWord(file);
-    //printf("%d\n",result);
     
     
     return 0;

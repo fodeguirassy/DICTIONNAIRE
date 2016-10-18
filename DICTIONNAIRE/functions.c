@@ -35,13 +35,20 @@ void findWord(char* filename){
     
     FILE* file = fopen(filename, "r");
     if(file){
-        //char* word;
+        char word[255];
         //word = readFromStdin("A WORD TO FIND");
+        
+        //printf("SEARCHING A WORLD");
+        //scanf("%s",word);
+        //word[strlen(word)-1] = '\0';
+        //printf("YOUR WORD %s\n",word);
+        
         char answer[255];
         while((fgets(answer, 255, file))){
-            printf("%s\n",answer);
+            //printf("%d\n",strcmp(word, answer));
+            printf("The length of %s is %ld\n",answer, strlen(answer));
         }
-        
+        //printf("ANSWER : %s",answer);
     }
 }
 
