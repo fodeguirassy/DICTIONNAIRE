@@ -14,9 +14,6 @@
 int main(int argc, const char * argv[]) {
     
     char* file = "source.txt" ;
-    
     findWord(file);
-    
-    
     return 0;
 }

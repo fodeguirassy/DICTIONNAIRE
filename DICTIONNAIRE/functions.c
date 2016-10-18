@@ -38,15 +38,16 @@ void findWord(char* filename){
         char word[255];
         //word = readFromStdin("A WORD TO FIND");
         
-        //printf("SEARCHING A WORLD");
-        //scanf("%s",word);
-        //word[strlen(word)-1] = '\0';
-        //printf("YOUR WORD %s\n",word);
+        printf("SEARCHING A WORLD");
+        scanf("%s",word);
+        word[strlen(word)+1] = '\0';
+        printf("YOUR WORD %s length is %ld\n",word,strlen(word));
         
         char answer[255];
         while((fgets(answer, 255, file))){
-            //printf("%d\n",strcmp(word, answer));
-            printf("The length of %s is %ld\n",answer, strlen(answer));
+            //answer[strlen(answer)] = answer[strlen(answer) - 1];
+            //printf("%d\n",strcmp(word,answer));
+            printf("%s\n",word);
         }
         //printf("ANSWER : %s",answer);
     }
