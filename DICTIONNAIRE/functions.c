@@ -43,10 +43,8 @@ void findWord(char* filename){
         printf("YOUR WORD %s length is %ld\n",word,strlen(word));
         
         char *answer;
-        while((fgets(&answer, sizeof(answer), file))){
-            //answer[strlen(answer)] = answer[strlen(answer) - 1];
-            //printf("%d\n",strcmp(word,answer));
-            printf("%s lentgh is  %d",answer, strlen(answer));
+        while((fgets(answer, sizeof(answer), file))){
+                printf("%s lentgh is  %lu",answer, strlen(answer));
         }
         
     }
