@@ -13,7 +13,11 @@
 
 int main(int argc, const char * argv[]) {
     
-    menu();
+    //menu();
+    
+    char* filename = "source.txt";
+    
+    searchWord(filename);
     
     return 0;
 }

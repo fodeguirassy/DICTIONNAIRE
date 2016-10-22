@@ -18,7 +18,7 @@ void chooseDictionary();
 void eraseExistingFile();
 void createNewDictionary(FILE*, char*, char*);
 void addWordsToDictionary(FILE*, char*, char*);
-void searchWord();
+void searchWord(char*);
 void displayDictionary(FILE*, char*, char*);
 void deleteWord(FILE*, char*, char*);
 void deleteDictionary(FILE*, char*, char*);

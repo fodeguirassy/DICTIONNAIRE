@@ -104,7 +104,7 @@ void menu2(FILE* dictionary, char* name, char* path) {
         
         switch (action) {
             case 1:
-                searchWord();
+                searchWord(name);
                 break;
             case 2:
                 displayDictionary(dictionary,name, path);
@@ -176,8 +176,31 @@ void chooseDictionary() {
     
 }
 
-void searchWord(){
+void searchWord(char* name){
     
+    char *wordToFind;
+    char *answer = malloc(sizeof(char)*255);
+    
+    FILE *dictionary = fopen(name, "r+");
+    
+    if(dictionary != NULL){
+        
+        printf("PLEASE ENTER THE WORD YOU WOULD LIKE TO FIND\n");
+        scanf("%s",wordToFind);
+        
+        while(fgets(answer, sizeof(answer), dictionary)){
+            if(!strcmp(wordToFind, answer)){
+                printf("THE WORD HAS BEEN FOUND\n");
+            }
+            //else
+                //printf("THE WORD YOU ENTERED HASN'T MATCH WITH ANY OTHER IN THIS DICTIONARY");
+                //printf("%s",answer);
+            
+        }
+        fclose(dictionary);
+    }
+    else
+        printf("ERROR \n");
 }
 
 void displayDictionary(FILE* dictionary, char* name, char* path) {
