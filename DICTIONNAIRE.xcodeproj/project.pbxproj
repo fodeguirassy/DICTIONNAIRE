@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0884FA0F1DB37F8900183558 /* functions.c in Sources */ = {isa = PBXBuildFile; fileRef = 0884FA0D1DB37F8900183558 /* functions.c */; };
-		7D0A3BCC1DB1168800B11A4C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A3BCB1DB1168800B11A4C /* main.c */; };
+		08C4E4271DB4078C00ED2FAB /* gestbib.c in Sources */ = {isa = PBXBuildFile; fileRef = 08C4E4251DB4078C00ED2FAB /* gestbib.c */; };
+		7D0A3BCC1DB1168800B11A4C /* main1.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A3BCB1DB1168800B11A4C /* main1.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,10 +24,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0884FA0D1DB37F8900183558 /* functions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = functions.c; sourceTree = "<group>"; };
-		0884FA0E1DB37F8900183558 /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
+		08C4E4251DB4078C00ED2FAB /* gestbib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gestbib.c; sourceTree = "<group>"; };
+		08C4E4261DB4078C00ED2FAB /* gestbib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gestbib.h; sourceTree = "<group>"; };
 		7D0A3BC81DB1168800B11A4C /* DICTIONNAIRE */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DICTIONNAIRE; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D0A3BCB1DB1168800B11A4C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		7D0A3BCB1DB1168800B11A4C /* main1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main1.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +60,9 @@
 		7D0A3BCA1DB1168800B11A4C /* DICTIONNAIRE */ = {
 			isa = PBXGroup;
 			children = (
-				7D0A3BCB1DB1168800B11A4C /* main.c */,
-				0884FA0D1DB37F8900183558 /* functions.c */,
-				0884FA0E1DB37F8900183558 /* functions.h */,
+				7D0A3BCB1DB1168800B11A4C /* main1.c */,
+				08C4E4251DB4078C00ED2FAB /* gestbib.c */,
+				08C4E4261DB4078C00ED2FAB /* gestbib.h */,
 			);
 			path = DICTIONNAIRE;
 			sourceTree = "<group>";
@@ -124,8 +124,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D0A3BCC1DB1168800B11A4C /* main.c in Sources */,
-				0884FA0F1DB37F8900183558 /* functions.c in Sources */,
+				7D0A3BCC1DB1168800B11A4C /* main1.c in Sources */,
+				08C4E4271DB4078C00ED2FAB /* gestbib.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +222,7 @@
 		7D0A3BD01DB1168800B11A4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -229,6 +230,7 @@
 		7D0A3BD11DB1168800B11A4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
