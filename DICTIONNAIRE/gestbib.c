@@ -49,7 +49,7 @@ void createDictionary(){
     strcat(name, ".txt");
     strcat(path,name);
     
-    dictionary = fopen(path,"r");
+    dictionary = fopen(path,"w");
     
     if(dictionary == NULL) {
         
@@ -230,7 +230,7 @@ void addWordsToDictionary(FILE * dictionary, char* name, char* path) {
         fclose(dictionary);
     }
     
-    printf("\nFélicitations !\nVous venez d'ajouter des mots au dictionnaire %s\n\n",name);
+    printf("\nFélicitations !\nVous venez d'ajouter des mots au dictionnaire %s\n",name);
     
     menu2(dictionary, name, path);
     
@@ -246,16 +246,20 @@ void deleteWord(FILE* dictionary, char* name, char* path) {
     dictionary = fopen(path, "r+");
     
     if(dictionary != NULL) {
-        printf("Veuillez saisir le nombre de mots que vous souhaitez supprimer:\n");
+        printf("\nVeuillez saisir le nombre de mots que vous souhaitez supprimer:\n");
         scanf("%d",&nb_words);
         
         printf("Quel(s) sont les mots que vous souhaitez supprimer ?\n");
         
         for(i = 0; i < nb_words; i++) {
-            scanf("%s",delete_words);
-            while (fgets(string, 255, dictionary) != '\0') {
-                if(string == delete_words) {
-                    printf("%s",string);
+            scanf("%s",&delete_words[i]);
+            while (fgets(&string[i], 255, dictionary) != '\0') {
+                if(strcmp(&string[i],&delete_words[i])) {
+                    printf("%s",&string[i]);
+                    //int size = strlen(&string[i]);
+                    //printf("%d",size);
+                    //fseek(dictionary, -size, SEEK_END);
+                    
                 }
             }
         }
