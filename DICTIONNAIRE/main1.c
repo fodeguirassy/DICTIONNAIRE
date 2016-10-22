@@ -9,9 +9,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "functions.c"
+#include "gestbib.h"
+
 
 int main(int argc, const char * argv[]) {
+    
+    menu();
     
     return 0;
 }
