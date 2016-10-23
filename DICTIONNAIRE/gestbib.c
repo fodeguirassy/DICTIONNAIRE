@@ -139,7 +139,6 @@ void chooseDictionary() {
     
     printf("\nVeuillez entrer le nom du dictionnaire souhaité:\n");
     scanf("%s",name);
-    printf("\n");
     
     strcat(name,".txt");
     strcat(path, name);
@@ -239,6 +238,7 @@ void addWordsToDictionary(FILE * dictionary, char* name, char* path) {
 void deleteWord(FILE* dictionary, char* name, char* path) {
     
     char* delete_words = malloc(sizeof(char) * 255);
+    char* stringToDelete = malloc(sizeof(char) * 255);
     char* string = malloc(sizeof(char) * 255);
     int nb_words = 0, i = 0;
     displayDictionary(dictionary, name, path);
@@ -250,19 +250,40 @@ void deleteWord(FILE* dictionary, char* name, char* path) {
         scanf("%d",&nb_words);
         
         printf("Quel(s) sont les mots que vous souhaitez supprimer ?\n");
-        
+        //int count = 0, k = 0;
         for(i = 0; i < nb_words; i++) {
-            scanf("%s",&delete_words[i]);
-            while (fgets(&string[i], 255, dictionary) != '\0') {
-                if(strcmp(&string[i],&delete_words[i])) {
-                    printf("%s",&string[i]);
-                    //int size = strlen(&string[i]);
-                    //printf("%d",size);
-                    //fseek(dictionary, -size, SEEK_END);
-                    
+            int count = 0;
+            //string = 0;
+            fflush(dictionary);
+            printf("Saisir:");
+            scanf("%s",delete_words);
+            //while (*string != '\0') {
+                fgets(string, 255, dictionary);
+                while(string != '\0') {
+                    if(strcmp(string, delete_words) != 0) {
+                        fputs(" ", dictionary);
+                    }
+                    //count++;
                 }
-            }
+                /*while(delete_words[count] == string && delete_words[count] != '\n') {
+                    count++;
+                    fseek(dictionary, -1, SEEK_CUR);
+                    fputc(' ', dictionary);
+                    //stringToDelete[k] = string;
+                    k++;
+                }*/
+           //}
+            
+            //printf("mot à supprimer: %s\n",stringToDelete);
+            //fseek(dictionary, 0, SEEK_SET);
         }
+        
+        /*while(fgets(stringToDelete, 255, dictionary)) {
+            if(stringToDelete == NULL) {
+                printf("chaine vide : %s",stringToDelete);
+            }
+            //fputs("\0", dictionary);
+        }*/
         displayDictionary(dictionary, name, path);
         fclose(dictionary);
     }else {
