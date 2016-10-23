@@ -179,28 +179,31 @@ void chooseDictionary() {
 void searchWord(char* name){
     
     char *wordToFind;
-    char *answer = malloc(sizeof(char)*255);
+    char *answer = malloc(sizeof(char)*1026);
     
-    FILE *dictionary = fopen(name, "r+");
+    FILE* dictionary = fopen(name, "r+");
     
     if(dictionary != NULL){
         
         printf("PLEASE ENTER THE WORD YOU WOULD LIKE TO FIND\n");
         scanf("%s",wordToFind);
         
-        while(fgets(answer, sizeof(answer), dictionary)){
-            if(!strcmp(wordToFind, answer)){
-                printf("THE WORD HAS BEEN FOUND\n");
-            }
+        //wordToFind[strlen(wordToFind) + 1] = '\0';
+        
+        while(fgets(answer, sizeof(answer), dictionary) != '\0'){
+            //if(!strcmp(wordToFind, answer)){
+                //printf("THE WORD HAS BEEN FOUND\n");
+            //}
             //else
-                //printf("THE WORD YOU ENTERED HASN'T MATCH WITH ANY OTHER IN THIS DICTIONARY");
-                //printf("%s",answer);
+                //printf("ENTERED STRING LENGHT IS %ld \t %s LENGHT IS %ld", strlen(wordToFind),answer,strlen(answer));
+            printf("%s LENGTH IS %ld",answer, strlen(answer));
             
         }
         fclose(dictionary);
     }
     else
         printf("ERROR \n");
+    
 }
 
 void displayDictionary(FILE* dictionary, char* name, char* path) {
