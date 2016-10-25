@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
+#include <sys/xattr.h>
 #include "gestbib.h"
 
 void menu() {
@@ -27,6 +29,7 @@ void menu() {
                 createDictionary();
                 break;
             case 50:
+                dictionaryList();
                 chooseDictionary();
                 break;
             default:
@@ -34,6 +37,29 @@ void menu() {
                 break;
         }
     }while(*choice != 49 && *choice != 50);
+}
+
+void dictionaryList() {
+    
+    DIR* directory = opendir("/Users/berangerelatouche/Documents/fichiers_dico/");
+    
+    if(directory != NULL) {
+        
+        printf("\nChoissisez un dictionnaire:\n");
+        
+        struct dirent * content;
+        
+        while ((content = readdir(directory)) != NULL)
+        {
+            printf("%s\n", content->d_name);
+        }
+        
+        closedir(directory);
+        
+    }else {
+        closedir(directory);
+    }
+    
 }
 
 void createDictionary(){
@@ -51,7 +77,7 @@ void createDictionary(){
     
     dictionary = fopen(path,"w");
     
-    if(dictionary == NULL) {
+    if(dictionary != NULL) {
         
         createNewDictionary(dictionary, path, name);
         fclose(dictionary);
@@ -139,7 +165,6 @@ void chooseDictionary() {
     
     printf("\nVeuillez entrer le nom du dictionnaire souhaité:\n");
     scanf("%s",name);
-    printf("\n");
     
     strcat(name,".txt");
     strcat(path, name);
@@ -265,6 +290,7 @@ void addWordsToDictionary(FILE * dictionary, char* name, char* path) {
 void deleteWord(FILE* dictionary, char* name, char* path) {
     
     char* delete_words = malloc(sizeof(char) * 255);
+    //char* stringToDelete = malloc(sizeof(char) * 255);
     char* string = malloc(sizeof(char) * 255);
     int nb_words = 0, i = 0;
     displayDictionary(dictionary, name, path);
@@ -276,20 +302,41 @@ void deleteWord(FILE* dictionary, char* name, char* path) {
         scanf("%d",&nb_words);
         
         printf("Quel(s) sont les mots que vous souhaitez supprimer ?\n");
-        
+        //int count = 0, k = 0;
         for(i = 0; i < nb_words; i++) {
-            scanf("%s",&delete_words[i]);
-            while (fgets(&string[i], 255, dictionary) != '\0') {
-                if(strcmp(&string[i],&delete_words[i])) {
+            //int count = 0;
+            //string = 0;
+            printf("Saisir:");
+            scanf("%s",delete_words);
+            while ((fgets(string,22,dictionary) != '\0')) {
+                //while(string != '\0') {
+                if(strcmp(&string[i], &delete_words[i]) != 0) {
                     printf("%s",&string[i]);
-                    //int size = strlen(&string[i]);
-                    //printf("%d",size);
-                    //fseek(dictionary, -size, SEEK_END);
-                    
+                    //fputs("\0", dictionary);
+                }else {
+                    printf("pas le meme mot");
                 }
-            }
+                    //count++;
+                //}
+                /*while(delete_words[count] == string && delete_words[count] != '\n') {
+                    count++;
+                    fseek(dictionary, -1, SEEK_CUR);
+                    fputc(' ', dictionary);
+                    //stringToDelete[k] = string;
+                    k++;
+                }*/
+           }
+            
+            //printf("mot à supprimer: %s\n",stringToDelete);
+            //fseek(dictionary, 0, SEEK_SET);
         }
-        displayDictionary(dictionary, name, path);
+        /*while(fgets(stringToDelete, 255, dictionary)) {
+            if(stringToDelete == NULL) {
+                printf("chaine vide : %s",stringToDelete);
+            }
+            //fputs("\0", dictionary);
+        }*/
+        //displayDictionary(dictionary, name, path);
         fclose(dictionary);
     }else {
         printf("Erreur !");
