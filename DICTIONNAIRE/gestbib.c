@@ -188,15 +188,18 @@ void searchWord(char* name){
         printf("PLEASE ENTER THE WORD YOU WOULD LIKE TO FIND\n");
         scanf("%s",wordToFind);
         
-        //wordToFind[strlen(wordToFind) + 1] = '\0';
         
-        while(fgets(answer, sizeof(answer), dictionary) != '\0'){
-            //if(!strcmp(wordToFind, answer)){
-                //printf("THE WORD HAS BEEN FOUND\n");
-            //}
-            //else
-                //printf("ENTERED STRING LENGHT IS %ld \t %s LENGHT IS %ld", strlen(wordToFind),answer,strlen(answer));
-            printf("%s LENGTH IS %ld",answer, strlen(answer));
+        while(fgets(answer, 255, dictionary)){
+            
+            //printf("%s LENGTH BEFORE STRCSPN IS %ld",answer, strlen(answer));
+            
+            answer[strcspn(answer, "\n")] = '\0';
+            
+            //printf("%s LENGTH AFTER STRCSPN IS %ld",answer, strlen(answer));
+            
+            if(!strcmp(answer, wordToFind)){
+                printf("MATCHEEEEEEEDDDDDD\n");
+            }
             
         }
         fclose(dictionary);
