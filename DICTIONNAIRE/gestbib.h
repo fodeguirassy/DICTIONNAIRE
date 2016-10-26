@@ -22,5 +22,6 @@ void searchWord(char*);
 void displayDictionary(FILE*, char*, char*);
 void deleteWord(FILE*, char*, char*);
 void deleteDictionary(FILE*, char*, char*);
+void dictionaryList();
 
 #endif /* functions_h */
