@@ -12,12 +12,13 @@
 #include "gestbib.h"
 
 int main(int argc, const char * argv[]) {
-    
+
     //menu();
-    
+
     char* filename = "source.txt";
-    
+
     searchWord(filename);
-    
+    printf("Yo");
+
     return 0;
 }
