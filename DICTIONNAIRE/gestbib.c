@@ -63,7 +63,6 @@ void printLinkedList(LinkedList* ll){
 
 
 
-
 void dictionaryList() {
     
     DIR* directory = opendir("/Users/berangerelatouche/Documents/fichiers_dico/");
