@@ -13,8 +13,7 @@
 
 
 int main(int argc, const char * argv[]) {
-<<<<<<< HEAD
-        
+    
     char* filename = "source.txt";
     char* dictionary2 = "source4.txt";
     
@@ -23,20 +22,6 @@ int main(int argc, const char * argv[]) {
     
     menu(dictionarys);
     
-    //createDictionary(dictionarys);
-    
-    //searchWord(filename);
-    
-=======
-
-    //menu();
-
-    char* filename = "source.txt";
-
-    searchWord(filename);
-    printf("Yo");
-
->>>>>>> origin/master
     return 0;
 }
 
