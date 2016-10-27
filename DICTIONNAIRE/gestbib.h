@@ -11,17 +11,29 @@
 
 #include <stdio.h>
 
-void menu();
-void menu2(FILE*, char*, char*);
-void createDictionary();
-void chooseDictionary();
-void eraseExistingFile();
-void createNewDictionary(FILE*, char*, char*);
-void addWordsToDictionary(FILE*, char*, char*);
-void searchWord(char*);
-void displayDictionary(FILE*, char*, char*);
-void deleteWord(FILE*, char*, char*);
-void deleteDictionary(FILE*, char*, char*);
+struct LinkedList{
+    char* value;
+    struct LinkedList* next;
+    
+};
+
+typedef struct LinkedList LinkedList;
+
+void menu(LinkedList* dictio);
+void menu2(FILE*,LinkedList*);
+void createDictionary(LinkedList*);
+//void chooseDictionary(LinkedList*);
+//void eraseExistingFile(LinkedList*);
+//void createNewDictionary(FILE*, char*, char*,LinkedList*);
+//void addWordsToDictionary(FILE*, char*, char*,LinkedList*);
+void searchWord(FILE*,LinkedList*);
+//void displayDictionary(FILE*, char*, char*,LinkedList*);
+//void deleteWord(FILE*, char*, char*,LinkedList*);
+//void deleteDictionary(FILE*, char*, char*,LinkedList*);
 void dictionaryList();
+LinkedList* newElement(char* v);
+void printLinkedList(LinkedList* ll);
+void chooseDictionary(LinkedList* dictionary);
+
 
 #endif /* functions_h */

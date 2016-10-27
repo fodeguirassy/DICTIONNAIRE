@@ -11,13 +11,21 @@
 #include <string.h>
 #include "gestbib.h"
 
+
 int main(int argc, const char * argv[]) {
-    
-    //menu();
-    
+        
     char* filename = "source.txt";
+    char* dictionary2 = "source4.txt";
     
-    searchWord(filename);
+    LinkedList* dictionarys = newElement(filename);
+    dictionarys->next = newElement(dictionary2);
+    
+    menu(dictionarys);
+    
+    //createDictionary(dictionarys);
+    
+    //searchWord(filename);
     
     return 0;
 }
+
