@@ -20,13 +20,13 @@ struct LinkedList{
 typedef struct LinkedList LinkedList;
 
 void menu(LinkedList* dictio);
-void menu2(FILE*,LinkedList*);
+void menu2(char*,LinkedList*);
 void createDictionary(LinkedList*);
 //void chooseDictionary(LinkedList*);
 //void eraseExistingFile(LinkedList*);
 //void createNewDictionary(FILE*, char*, char*,LinkedList*);
 //void addWordsToDictionary(FILE*, char*, char*,LinkedList*);
-void searchWord(FILE*,LinkedList*);
+void searchWord(char*,LinkedList*);
 //void displayDictionary(FILE*, char*, char*,LinkedList*);
 //void deleteWord(FILE*, char*, char*,LinkedList*);
 //void deleteDictionary(FILE*, char*, char*,LinkedList*);
@@ -34,6 +34,7 @@ void dictionaryList();
 LinkedList* newElement(char* v);
 void printLinkedList(LinkedList* ll);
 void chooseDictionary(LinkedList* dictionary);
+void addWords(char*, LinkedList*);
 
 
 #endif /* functions_h */

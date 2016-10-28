@@ -180,13 +180,9 @@ void chooseDictionary(LinkedList* dictionary) {
     if(name != NULL){
         while(dictionary != NULL){
             if(!strcmp(name,dictionary->value)){
-                choosenDictionary = fopen(name,"r+");
-                if(choosenDictionary){
-                    
-                    menu2(choosenDictionary,dictionary);
-                    
+                
+                    menu2(name,dictionary);
                     fclose(choosenDictionary);
-                }
             }
             dictionary = dictionary->next;
         }
@@ -210,7 +206,7 @@ void chooseDictionary(LinkedList* dictionary) {
 //    
 //}
 
-void menu2(FILE* dictionary, LinkedList* dictionaryList) {
+void menu2(char* dictionary , LinkedList* dictionaryList) {
     
     int action = 0;
     
@@ -234,7 +230,7 @@ void menu2(FILE* dictionary, LinkedList* dictionaryList) {
                 menu2(dictionary,dictionaryList);
                 break;
             case 3:
-                //addWordsToDictionary(dictionary, dictionaryList);
+                addWords(dictionary, dictionaryList);
                 break;
             case 4:
                 //deleteWord(dictionary, dictionaryList);
@@ -300,12 +296,14 @@ void menu2(FILE* dictionary, LinkedList* dictionaryList) {
 
 
 
-void searchWord(FILE* dictionary, LinkedList* dictionaryList){
+void searchWord(char* name, LinkedList* dictionaryList){
     
     char *wordToFind = malloc(sizeof(char)*255);
     char *answer = malloc(sizeof(char)*1026);
     
     int lineCounter = 0;
+    
+    FILE* dictionary = fopen(name,"r+");
     
     if(dictionary != NULL){
         
@@ -317,7 +315,7 @@ void searchWord(FILE* dictionary, LinkedList* dictionaryList){
             answer[strcspn(answer, "\n")] = '\0';
             if(!strcmp(answer, wordToFind)){
                 printf("%s HAS BEEN FOUND AT LINE NUMBER %d\n",answer,lineCounter);
-                menu2(dictionary, dictionaryList);
+                menu2(name, dictionaryList);
             }
         }
         
@@ -352,7 +350,53 @@ void searchWord(FILE* dictionary, LinkedList* dictionaryList){
 //    
 //}
 
-//void addWordsToDictionary(FILE * dictionary, char* name, char* path,LinkedList* dictionaryList) {
+void addWords(char* name, LinkedList* dictionarys){
+    
+    int numberOfWords;
+    
+    printf("HOW MANY WORDS WOULD YOU LIKE TO ADD TO THE DICTIONARY\n");
+    scanf("%d",&numberOfWords);
+    
+    int count = 0;
+    char* newWord = malloc(sizeof(char)*255);
+    
+    
+    
+    
+    
+    FILE* dictionary = fopen(name,"w");
+    
+    
+    if(dictionary){
+        
+        while(count < numberOfWords){
+            printf("PLEASE ENTER THE NEW WORD YOU WOULD LIKE TO ADD TO THE DICTIONARY\n");
+            scanf("%s",newWord);
+            
+            fputs(newWord,dictionary);
+            fputs("\n",dictionary);
+            
+            
+            count++;
+            
+        }
+        fclose(dictionary);
+        free(newWord);
+        
+    }
+    else{
+        printf("IT IS NOT ANY DICTIONARY");
+    }
+    
+        
+}
+
+
+
+
+
+
+//void addWordsToDictionary(FILE * dictionary, LinkedList* dictionaryList) {
 //    
 //    int nb_words, count = 0;
 //    char* words = malloc(sizeof(char) * 255);
@@ -387,6 +431,8 @@ void searchWord(FILE* dictionary, LinkedList* dictionaryList){
 //    menu2(dictionary, name, path,dictionaryList);
 //    
 //}
+
+
 
 //void deleteWord(FILE* dictionary, char* name, char* path, LinkedList* dictionaryList) {
 //    
