@@ -30,7 +30,7 @@ void searchWord(char*,LinkedList*);
 //void displayDictionary(FILE*, char*, char*,LinkedList*);
 //void deleteWord(FILE*, char*, char*,LinkedList*);
 //void deleteDictionary(FILE*, char*, char*,LinkedList*);
-void dictionaryList();
+void dictionaryList(LinkedList*);
 LinkedList* newElement(char* v);
 void printLinkedList(LinkedList* ll);
 void chooseDictionary(LinkedList* dictionary);

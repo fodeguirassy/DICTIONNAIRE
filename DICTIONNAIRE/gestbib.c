@@ -16,7 +16,12 @@
 
 void menu(LinkedList* dictionary) {
     
+    
+    
+    
     char* choice = malloc(sizeof(char));
+    
+    
     
     printf("\n---------------\nLE DICTIONNAIRE\n---------------\nChoose an option (1 to 2)\n\n");
     printf("1. Créer un dictionnaire\n");
@@ -30,7 +35,7 @@ void menu(LinkedList* dictionary) {
                 createDictionary(dictionary);
                 break;
             case 50:
-                //dictionaryList();
+                dictionaryList(dictionary);
                 chooseDictionary(dictionary);
                 break;
             default:
@@ -38,6 +43,8 @@ void menu(LinkedList* dictionary) {
                 break;
         }
     }while(*choice != 49 && *choice != 50);
+    
+    free(choice);
 }
 
 
@@ -63,19 +70,17 @@ void printLinkedList(LinkedList* ll){
 
 
 
-void dictionaryList() {
+void dictionaryList(LinkedList* dictionarys) {
     
-    DIR* directory = opendir("/Users/berangerelatouche/Documents/fichiers_dico/");
+    DIR* directory = opendir("DICTIONARYS");
     
     if(directory != NULL) {
-        
-        printf("\nChoissisez un dictionnaire:\n");
         
         struct dirent * content;
         
         while ((content = readdir(directory)) != NULL)
         {
-            printf("%s\n", content->d_name);
+            dictionarys->next = newElement(content->d_name);
         }
         
         closedir(directory);
@@ -85,8 +90,6 @@ void dictionaryList() {
     }
     
 }
-
-
 
 
 void createDictionary(LinkedList* dictionaryList){
@@ -144,19 +147,16 @@ void createDictionary(LinkedList* dictionaryList){
             dictionaryList->next = newElement(dictionaryName);
             printf("HERE IS THE NEW LIST OF YOUR DICTIONARYS\n");
             printLinkedList(dictionaryList);
-            printf("YOU'RE BACK TO THE MENU");
             menu(dictionaryList);
         }
         else
         {
             printf("ERROR WHILE CREATING THE NEW DICTIONARY\n");
-            printf("YOU'RE BACK TO THE MENU");
             menu(dictionaryList);
         }
     }
     else{
         printf("PLEASE ENTER A VALID NAME\n");
-        printf("YOU'RE BACK TO THE MENU");
         menu(dictionaryList);
     }
     
@@ -359,11 +359,6 @@ void addWords(char* name, LinkedList* dictionarys){
     
     int count = 0;
     char* newWord = malloc(sizeof(char)*255);
-    
-    
-    
-    
-    
     FILE* dictionary = fopen(name,"w");
     
     
@@ -376,7 +371,6 @@ void addWords(char* name, LinkedList* dictionarys){
             fputs(newWord,dictionary);
             fputs("\n",dictionary);
             
-            
             count++;
             
         }
@@ -388,7 +382,9 @@ void addWords(char* name, LinkedList* dictionarys){
         printf("IT IS NOT ANY DICTIONARY");
     }
     
-        
+    
+    menu2(name, dictionarys);
+    
 }
 
 

@@ -15,11 +15,9 @@
 int main(int argc, const char * argv[]) {
     
     char* filename = "source.txt";
-    char* dictionary2 = "source4.txt";
     
     LinkedList* dictionarys = newElement(filename);
-    dictionarys->next = newElement(dictionary2);
-    
+
     menu(dictionarys);
     
     return 0;
