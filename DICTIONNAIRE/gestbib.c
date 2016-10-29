@@ -17,7 +17,8 @@
 void menu(LinkedList* dictionary) {
     
     
-    
+    dictionaryList(dictionary);
+    printLinkedList(dictionary);
     
     char* choice = malloc(sizeof(char));
     
@@ -28,15 +29,18 @@ void menu(LinkedList* dictionary) {
     printf("2. Utiliser un dictionnaire existant\n");
     
     do{
+        
+        
         scanf("%s",choice);
         
         switch(*choice) {
             case 49:
                 createDictionary(dictionary);
+                menu(dictionary);
                 break;
             case 50:
-                dictionaryList(dictionary);
                 chooseDictionary(dictionary);
+                 menu(dictionary);
                 break;
             default:
                 printf("Saisie incorrecte ! Réessayer\n");
@@ -81,59 +85,20 @@ void dictionaryList(LinkedList* dictionarys) {
         while ((content = readdir(directory)) != NULL)
         {
             dictionarys->next = newElement(content->d_name);
+            dictionarys = dictionarys->next;
         }
         
         closedir(directory);
         
-    }else {
-        closedir(directory);
     }
-    
 }
 
 
 void createDictionary(LinkedList* dictionaryList){
-    
-//    char* choice = malloc(sizeof(char));
-//    char* name = malloc(sizeof(char) * 255);
-//    FILE * dictionary;
-//    char path[255] = "/Users/berangerelatouche/Documents/fichiers_dico/";
-//    
-//    printf("\nVeuillez nommer votre dictionnaire:\n");
-//    scanf("%s",name);
-//    
-//    strcat(name, ".txt");
-//    strcat(path,name);
-//    
-//    dictionary = fopen(path,"w");
-//    
-//    if(dictionary != NULL) {
-//        
-//        createNewDictionary(dictionary, path, name,dictionaryList);
-//        fclose(dictionary);
-//        
-//    }else {
-//        printf("\nAttention ce fichier existe déjà !\nSi vous continuez, le contenu de ce fichier sera écrasé. Continuer ? o/n\n");
-//        do {
-//            scanf("%s",choice);
-//            
-//            switch(*choice) {
-//                case 111:
-//                    createNewDictionary(dictionary, path, name,dictionaryList);
-//                    break;
-//                case 110:
-//                    createDictionary(dictionaryList);
-//                    break;
-//                default:
-//                    printf("\nSaisie incorrecte ! Réessayer\n");
-//                    break;
-//            }
-//        }while(*choice != 111 && *choice != 110);
-//        
-//        fclose(dictionary);
-//    }
-    
 
+    printLinkedList(dictionaryList);
+    
+    
     char* dictionaryName = malloc(sizeof(char)*255);
     printf("ENTER A NAME FOR YOUR NEW DICTIONARY\n");
     scanf("%s",dictionaryName);
@@ -143,36 +108,34 @@ void createDictionary(LinkedList* dictionaryList){
         FILE* newDictionary = fopen(dictionaryName,"w");
         
         if(newDictionary != NULL){
+            
             printf("YOUR NEW DICTIONARY HAS BEEN CREATED\n");
             dictionaryList->next = newElement(dictionaryName);
+            dictionaryList = dictionaryList->next;
+            
+            
             printf("HERE IS THE NEW LIST OF YOUR DICTIONARYS\n");
             printLinkedList(dictionaryList);
-            menu(dictionaryList);
+            
+            
+            fclose(newDictionary);
         }
         else
         {
             printf("ERROR WHILE CREATING THE NEW DICTIONARY\n");
-            menu(dictionaryList);
+            
         }
     }
     else{
         printf("PLEASE ENTER A VALID NAME\n");
-        menu(dictionaryList);
-    }
+            }
     
-    
-    dictionaryList->next = newElement(dictionaryName);
-
     free(dictionaryName);
-
 }
 
 void chooseDictionary(LinkedList* dictionary) {
     
-    printLinkedList(dictionary);
-    
     char* name = malloc(sizeof(char)*255);
-    FILE* choosenDictionary;
     
     printf("ENTER THE NAME OF THE DICTIONARY YOU WANT TO WORK ON\n");
     scanf("%s",name);
@@ -180,18 +143,15 @@ void chooseDictionary(LinkedList* dictionary) {
     if(name != NULL){
         while(dictionary != NULL){
             if(!strcmp(name,dictionary->value)){
-                
-                    menu2(name,dictionary);
-                    fclose(choosenDictionary);
+                menu2(name,dictionary);
             }
+            
             dictionary = dictionary->next;
         }
         
     }else{
         printf("YOU'VE ENTERED A WRONG DICTIONNARY NAME\n");
-        printf("YOU'RE BACK TO THE MENU");
         menu(dictionary);
-        
     }
     
     free(name);
@@ -223,14 +183,16 @@ void menu2(char* dictionary , LinkedList* dictionaryList) {
         
         switch (action) {
             case 1:
-                searchWord(dictionary,dictionaryList);
-                break;
-            case 2:
-                //displayDictionary(dictionary,name, path,dictionaryList);
+                searchWord(dictionary);
                 menu2(dictionary,dictionaryList);
                 break;
+            case 2:
+                displayDictionary(dictionary);
+                menu2(dictionary, dictionaryList);
+                break;
             case 3:
-                addWords(dictionary, dictionaryList);
+                addWords(dictionary);
+                menu2(dictionary,dictionaryList);
                 break;
             case 4:
                 //deleteWord(dictionary, dictionaryList);
@@ -249,54 +211,31 @@ void menu2(char* dictionary , LinkedList* dictionaryList) {
     
 }
 
-//void chooseDictionary(LinkedList* dictionary) {
-//    
-//    char path[255] = "/Users/berangerelatouche/Documents/fichiers_dico/";
-//    FILE* dictionary_choosen;
-//    char* name = malloc(sizeof(char) * 255);
-//    char *choice = malloc(sizeof(char));
-//    
-//    printf("\nVeuillez entrer le nom du dictionnaire souhaité:\n");
-//    scanf("%s",name);
-//    
-//    strcat(name,".txt");
-//    strcat(path, name);
-//    
-//    dictionary_choosen = fopen(path, "r+");
-//    
-//    if(dictionary_choosen != NULL) {
-//        
-//        menu2(dictionary_choosen,name,path,dictionary);
-//        fclose(dictionary_choosen);
-//        
-//    }else {
-//        
-//        do {
-//            printf("Le dictionnaire demandé n'existe pas\nVoulez-vous créer un dictionnaire ? o/n\n");
-//            scanf("%s",choice);
-//            printf("\n");
-//            
-//            switch (*choice) {
-//                case 111:
-//                    createDictionary(dictionary);
-//                    break;
-//                case 110:
-//                    chooseDictionary(dictionary);
-//                    break;
-//                default:
-//                    printf("Saisie incorrect ! Réessayer\n");
-//                    break;
-//            }
-//        }while(*choice != 111 && *choice != 110);
-//        
-//        fclose(dictionary_choosen);
-//    }
-//    
-//}
+void displayDictionary(char* dictionaryName){
+    
+    printf("DICTIONARY NAME THAT YOU4RE WORKING ON IS %s\n",dictionaryName);
+    
+    FILE* dictionary = fopen(dictionaryName,"r");
+    
+    char* current = malloc(sizeof(char)*255);
+    
+    if(dictionary){
+        
+        while(fgets(current, sizeof(current), dictionary)){
+            printf("%s",current);
+        }
+    }
+    else{
+        printf("THE DICTIONARY IS NOT AVAILABLE\n");
+    }
+    
+    fclose(dictionary);
+    free(current);
+    
+}
 
 
-
-void searchWord(char* name, LinkedList* dictionaryList){
+void searchWord(char* name){
     
     char *wordToFind = malloc(sizeof(char)*255);
     char *answer = malloc(sizeof(char)*1026);
@@ -315,18 +254,16 @@ void searchWord(char* name, LinkedList* dictionaryList){
             answer[strcspn(answer, "\n")] = '\0';
             if(!strcmp(answer, wordToFind)){
                 printf("%s HAS BEEN FOUND AT LINE NUMBER %d\n",answer,lineCounter);
-                menu2(name, dictionaryList);
             }
         }
         
-        fclose(dictionary);
-        free(answer);
-        free(wordToFind);
-    }
+            }
     else
         printf("ERROR WHILE OPENING THE DICTIONARY\n");
-        menu(dictionaryList);
     
+    fclose(dictionary);
+    free(answer);
+    free(wordToFind);
 }
 
 
@@ -350,7 +287,7 @@ void searchWord(char* name, LinkedList* dictionaryList){
 //    
 //}
 
-void addWords(char* name, LinkedList* dictionarys){
+void addWords(char* name){
     
     int numberOfWords;
     
@@ -372,25 +309,15 @@ void addWords(char* name, LinkedList* dictionarys){
             fputs("\n",dictionary);
             
             count++;
-            
         }
-        fclose(dictionary);
-        free(newWord);
-        
     }
     else{
         printf("IT IS NOT ANY DICTIONARY");
     }
-    
-    
-    menu2(name, dictionarys);
+    fclose(dictionary);
+    free(newWord);
     
 }
-
-
-
-
-
 
 //void addWordsToDictionary(FILE * dictionary, LinkedList* dictionaryList) {
 //    
@@ -525,6 +452,45 @@ void addWords(char* name, LinkedList* dictionarys){
 //        fclose(dictionary);
 //    }
 //}
+
+//    char* choice = malloc(sizeof(char));
+//    char* name = malloc(sizeof(char) * 255);
+//    FILE * dictionary;
+//    char path[255] = "/Users/berangerelatouche/Documents/fichiers_dico/";
+//
+//    printf("\nVeuillez nommer votre dictionnaire:\n");
+//    scanf("%s",name);
+//
+//    strcat(name, ".txt");
+//    strcat(path,name);
+//
+//    dictionary = fopen(path,"w");
+//
+//    if(dictionary != NULL) {
+//
+//        createNewDictionary(dictionary, path, name,dictionaryList);
+//        fclose(dictionary);
+//
+//    }else {
+//        printf("\nAttention ce fichier existe déjà !\nSi vous continuez, le contenu de ce fichier sera écrasé. Continuer ? o/n\n");
+//        do {
+//            scanf("%s",choice);
+//
+//            switch(*choice) {
+//                case 111:
+//                    createNewDictionary(dictionary, path, name,dictionaryList);
+//                    break;
+//                case 110:
+//                    createDictionary(dictionaryList);
+//                    break;
+//                default:
+//                    printf("\nSaisie incorrecte ! Réessayer\n");
+//                    break;
+//            }
+//        }while(*choice != 111 && *choice != 110);
+//
+//        fclose(dictionary);
+//    }
 
 
 

@@ -26,15 +26,15 @@ void createDictionary(LinkedList*);
 //void eraseExistingFile(LinkedList*);
 //void createNewDictionary(FILE*, char*, char*,LinkedList*);
 //void addWordsToDictionary(FILE*, char*, char*,LinkedList*);
-void searchWord(char*,LinkedList*);
-//void displayDictionary(FILE*, char*, char*,LinkedList*);
+void searchWord(char*);
+void displayDictionary(char*);
 //void deleteWord(FILE*, char*, char*,LinkedList*);
 //void deleteDictionary(FILE*, char*, char*,LinkedList*);
 void dictionaryList(LinkedList*);
 LinkedList* newElement(char* v);
 void printLinkedList(LinkedList* ll);
 void chooseDictionary(LinkedList* dictionary);
-void addWords(char*, LinkedList*);
+void addWords(char*);
 
 
 #endif /* functions_h */
