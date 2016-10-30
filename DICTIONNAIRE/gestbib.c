@@ -103,24 +103,11 @@ void createDictionary(LinkedList* dictionaryList){
     
     if(dictionaryName != NULL){
         
-        char* directory = "DICTIONARYS\"";
-        
-        char* filepath = malloc(sizeof(char)*255);
-        filepath = strcat(dictionaryName, directory);
-        
-        
         
         FILE* newDictionary = fopen(dictionaryName,"w");
         
         
-        
         if(newDictionary != NULL){
-            
-            int res = rename(newDictionary, filepath);
-            
-            if(!res){
-                printf("REMOVEEEDDDDD");
-            }
             
             printf("YOUR NEW DICTIONARY HAS BEEN CREATED\n");
             dictionaryList->next = newElement(dictionaryName);
@@ -129,6 +116,12 @@ void createDictionary(LinkedList* dictionaryList){
             char *choice = malloc(sizeof(char));
             
             do{
+                printf("CHOOSE AN ACTION TO EXECUTE WITH YOUR NEW DICTIONARY - from 1 to 4\n");
+                printf("1 - ADD A NEW WORD TO THE NEW DICTIONARY\n");
+                printf("2 - SEARCH FOR WORDS IN THE NEW DICTIONARY\n");
+                printf("3 - DISPLAY WORDS IN THE NEW DICTIONARY\n");
+                printf("4 - GO BACK TO THE MAIN MENU\n");
+                
                 scanf("%c",choice);
                 
                 switch (*choice) {
@@ -141,13 +134,13 @@ void createDictionary(LinkedList* dictionaryList){
                     case 51:
                         displayDictionary(dictionaryName);
                         break;
+                    case 52:
+                        menu(dictionaryList);
                     default:
                         break;
                 }
             
-                
-            
-            }while(*choice != 49 && *choice != 50 && *choice != 51);
+            }while(*choice != 49 && *choice != 50 && *choice != 51 && *choice != 52);
                         
         }
         else
@@ -156,10 +149,16 @@ void createDictionary(LinkedList* dictionaryList){
             
         }
     fclose(newDictionary);
+    
     }
     else{
         printf("EMPTY NAMES ARE NOT ALLOWED\n");
     }
+    
+    
+    
+
+    
     free(dictionaryName);
 }
 
