@@ -18,7 +18,9 @@ void menu(LinkedList* dictionary) {
     
     
     dictionaryList(dictionary);
-    printLinkedList(dictionary);
+    
+    
+    
     
     char* choice = malloc(sizeof(char));
     
@@ -76,26 +78,29 @@ void printLinkedList(LinkedList* ll){
 
 void dictionaryList(LinkedList* dictionarys) {
     
-    DIR* directory = opendir("DICTIONARYS");
+    
+    DIR* directory = opendir("/Users/fofofofodev/Desktop/ESGI 3A/SEMAINE C/DICTIONNAIRE/DICTIONARYS");
     
     if(directory != NULL) {
         
         struct dirent * content;
-        
+                
         while ((content = readdir(directory)) != NULL)
         {
             dictionarys->next = newElement(content->d_name);
             dictionarys = dictionarys->next;
+            
         }
         
         closedir(directory);
         
     }
+    else
+        printf("FAILED TO OPEN DIRECTORY");
 }
 
 
-void createDictionary(LinkedList* dictionaryList){
-    
+void createDictionary(LinkedList* dictionarys){
     
     char* dictionaryName = malloc(sizeof(char)*255);
     printf("ENTER A NAME FOR YOUR NEW DICTIONARY\n");
@@ -109,11 +114,13 @@ void createDictionary(LinkedList* dictionaryList){
         
         if(newDictionary != NULL){
             
+            dictionaryList(dictionarys);
+            printLinkedList(dictionarys);
+            
             printf("YOUR NEW DICTIONARY HAS BEEN CREATED\n");
-            dictionaryList->next = newElement(dictionaryName);
-            dictionaryList = dictionaryList->next;
             
             char *choice = malloc(sizeof(char));
+            
             
             do{
                 printf("CHOOSE AN ACTION TO EXECUTE WITH YOUR NEW DICTIONARY - from 1 to 4\n");
@@ -135,26 +142,25 @@ void createDictionary(LinkedList* dictionaryList){
                         displayDictionary(dictionaryName);
                         break;
                     case 52:
-                        menu(dictionaryList);
+                        menu(dictionarys);
                     default:
                         break;
                 }
             
             }while(*choice != 49 && *choice != 50 && *choice != 51 && *choice != 52);
                         
+            fclose(newDictionary);
         }
         else
         {
             printf("ERROR WHILE CREATING THE NEW DICTIONARY\n");
             
         }
-    fclose(newDictionary);
     
     }
     else{
         printf("EMPTY NAMES ARE NOT ALLOWED\n");
     }
-    
     
     
 
