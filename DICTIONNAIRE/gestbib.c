@@ -19,12 +19,7 @@ void menu(LinkedList* dictionary) {
     
     dictionaryList(dictionary);
     
-    
-    
-    
     char* choice = malloc(sizeof(char));
-    
-    
     
     printf("\n---------------\nLE DICTIONNAIRE\n---------------\nChoose an option (1 to 2)\n\n");
     printf("1. Créer un dictionnaire\n");
@@ -78,7 +73,6 @@ void printLinkedList(LinkedList* ll){
 
 void dictionaryList(LinkedList* dictionarys) {
     
-    
     DIR* directory = opendir("/Users/fofofofodev/Desktop/ESGI 3A/SEMAINE C/DICTIONNAIRE/DICTIONARYS");
     
     if(directory != NULL) {
@@ -93,7 +87,6 @@ void dictionaryList(LinkedList* dictionarys) {
         }
         
         closedir(directory);
-        
     }
     else
         printf("FAILED TO OPEN DIRECTORY");
@@ -108,47 +101,44 @@ void createDictionary(LinkedList* dictionarys){
     
     if(dictionaryName != NULL){
         
-        
         FILE* newDictionary = fopen(dictionaryName,"w");
-        
         
         if(newDictionary != NULL){
             
             dictionaryList(dictionarys);
-            printLinkedList(dictionarys);
+    
+            printf("YOUR NEW DICTIONARY HAS BEEN SUCCESFULLY CREATED\n");
             
-            printf("YOUR NEW DICTIONARY HAS BEEN CREATED\n");
+//            char *choice = malloc(sizeof(char));
+//            
+//            
+//            do{
+//                printf("CHOOSE AN ACTION TO EXECUTE WITH YOUR NEW DICTIONARY - from 1 to 4\n");
+//                printf("1 - ADD A NEW WORD TO THE NEW DICTIONARY\n");
+//                printf("2 - SEARCH FOR WORDS IN THE NEW DICTIONARY\n");
+//                printf("3 - DISPLAY WORDS IN THE NEW DICTIONARY\n");
+//                printf("4 - GO BACK TO THE MAIN MENU\n");
+//                
+//                scanf("%c",choice);
+//                
+//                switch (*choice) {
+//                    case 49:
+//                        addWords(dictionaryName);
+//                        break;
+//                    case 50:
+//                        searchWord(dictionaryName);
+//                        break;
+//                    case 51:
+//                        displayDictionary(dictionaryName);
+//                        break;
+//                    case 52:
+//                        menu(dictionarys);
+//                    default:
+//                        break;
+//                }
+//            
+//            }while(*choice != 49 && *choice != 50 && *choice != 51 && *choice != 52);
             
-            char *choice = malloc(sizeof(char));
-            
-            
-            do{
-                printf("CHOOSE AN ACTION TO EXECUTE WITH YOUR NEW DICTIONARY - from 1 to 4\n");
-                printf("1 - ADD A NEW WORD TO THE NEW DICTIONARY\n");
-                printf("2 - SEARCH FOR WORDS IN THE NEW DICTIONARY\n");
-                printf("3 - DISPLAY WORDS IN THE NEW DICTIONARY\n");
-                printf("4 - GO BACK TO THE MAIN MENU\n");
-                
-                scanf("%c",choice);
-                
-                switch (*choice) {
-                    case 49:
-                        addWords(dictionaryName);
-                        break;
-                    case 50:
-                        searchWord(dictionaryName);
-                        break;
-                    case 51:
-                        displayDictionary(dictionaryName);
-                        break;
-                    case 52:
-                        menu(dictionarys);
-                    default:
-                        break;
-                }
-            
-            }while(*choice != 49 && *choice != 50 && *choice != 51 && *choice != 52);
-                        
             fclose(newDictionary);
         }
         else
@@ -169,6 +159,9 @@ void createDictionary(LinkedList* dictionarys){
 }
 
 void chooseDictionary(LinkedList* dictionary) {
+    
+    printLinkedList(dictionary);
+    
     
     char* name = malloc(sizeof(char)*255);
     
