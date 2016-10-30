@@ -95,8 +95,6 @@ void dictionaryList(LinkedList* dictionarys) {
 
 
 void createDictionary(LinkedList* dictionaryList){
-
-    printLinkedList(dictionaryList);
     
     
     char* dictionaryName = malloc(sizeof(char)*255);
@@ -105,31 +103,63 @@ void createDictionary(LinkedList* dictionaryList){
     
     if(dictionaryName != NULL){
         
+        char* directory = "DICTIONARYS\"";
+        
+        char* filepath = malloc(sizeof(char)*255);
+        filepath = strcat(dictionaryName, directory);
+        
+        
+        
         FILE* newDictionary = fopen(dictionaryName,"w");
         
+        
+        
         if(newDictionary != NULL){
+            
+            int res = rename(newDictionary, filepath);
+            
+            if(!res){
+                printf("REMOVEEEDDDDD");
+            }
             
             printf("YOUR NEW DICTIONARY HAS BEEN CREATED\n");
             dictionaryList->next = newElement(dictionaryName);
             dictionaryList = dictionaryList->next;
             
+            char *choice = malloc(sizeof(char));
             
-            printf("HERE IS THE NEW LIST OF YOUR DICTIONARYS\n");
-            printLinkedList(dictionaryList);
+            do{
+                scanf("%c",choice);
+                
+                switch (*choice) {
+                    case 49:
+                        addWords(dictionaryName);
+                        break;
+                    case 50:
+                        searchWord(dictionaryName);
+                        break;
+                    case 51:
+                        displayDictionary(dictionaryName);
+                        break;
+                    default:
+                        break;
+                }
             
+                
             
-            fclose(newDictionary);
+            }while(*choice != 49 && *choice != 50 && *choice != 51);
+                        
         }
         else
         {
             printf("ERROR WHILE CREATING THE NEW DICTIONARY\n");
             
         }
+    fclose(newDictionary);
     }
     else{
-        printf("PLEASE ENTER A VALID NAME\n");
-            }
-    
+        printf("EMPTY NAMES ARE NOT ALLOWED\n");
+    }
     free(dictionaryName);
 }
 
@@ -157,14 +187,6 @@ void chooseDictionary(LinkedList* dictionary) {
     free(name);
     
 }
-
-//void createNewDictionary(FILE* dictionary, char* path, char* name, LinkedList* dictionaryList) {
-//    
-//    printf("\nFélicitations vous avez créer le dictionnaire %s\n",name);
-//    
-//    menu2(dictionary, name, path,dictionaryList);
-//    
-//}
 
 void menu2(char* dictionary , LinkedList* dictionaryList) {
     
@@ -267,26 +289,6 @@ void searchWord(char* name){
 }
 
 
-//void displayDictionary(FILE* dictionary, char* name, char* path, LinkedList* dictionaryList) {
-//    
-//    char* read_word = malloc(sizeof(char) * 255);
-//    
-//    dictionary = fopen(path, "r+");
-//    
-//    if(dictionary != NULL) {
-//        printf("\nDictionnaire: %s\n",name);
-//        while(fgets(read_word, 255, dictionary)) {
-//            printf("%s",read_word);
-//        }
-//        fclose(dictionary);
-//    }else {
-//        printf("Erreur !\n");
-//        menu(dictionaryList);
-//        fclose(dictionary);
-//    }
-//    
-//}
-
 void addWords(char* name){
     
     int numberOfWords;
@@ -318,6 +320,39 @@ void addWords(char* name){
     free(newWord);
     
 }
+
+
+
+//void createNewDictionary(FILE* dictionary, char* path, char* name, LinkedList* dictionaryList) {
+//
+//    printf("\nFélicitations vous avez créer le dictionnaire %s\n",name);
+//
+//    menu2(dictionary, name, path,dictionaryList);
+//
+//}
+
+
+//void displayDictionary(FILE* dictionary, char* name, char* path, LinkedList* dictionaryList) {
+//
+//    char* read_word = malloc(sizeof(char) * 255);
+//
+//    dictionary = fopen(path, "r+");
+//
+//    if(dictionary != NULL) {
+//        printf("\nDictionnaire: %s\n",name);
+//        while(fgets(read_word, 255, dictionary)) {
+//            printf("%s",read_word);
+//        }
+//        fclose(dictionary);
+//    }else {
+//        printf("Erreur !\n");
+//        menu(dictionaryList);
+//        fclose(dictionary);
+//    }
+//
+//}
+
+
 
 //void addWordsToDictionary(FILE * dictionary, LinkedList* dictionaryList) {
 //    
