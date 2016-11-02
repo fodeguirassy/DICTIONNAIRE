@@ -18,6 +18,7 @@ void menu(LinkedList* dictionary) {
     
     
     dictionaryList(dictionary);
+    printLinkedList(dictionary);
     
     char* choice = malloc(sizeof(char));
     
@@ -62,14 +63,33 @@ LinkedList* newElement(char* v){
 void printLinkedList(LinkedList* ll){
     // boucle itérative tant que ll existe;
     while(ll != NULL){
-        printf("%s\n", ll->value);
-        ll = ll->next; // ll courant devient ll d'après
+        if(ll->value != NULL){
+            if(checkName(ll->value)){
+                printf("%s\n", ll->value);
+            }
+        }
+        ll = ll->next;
+        // ll courant devient ll d'après
         //L'équivalent de l'incrémentation d'un compteur mais pour une linkedlist
     }
     printf("\n");
 }
 
-
+int checkName(char* astring){
+    
+    char dot = '.';
+    char* extension = ".txt";
+    
+    char* ret = strchr(astring, dot);
+    
+    if(ret != NULL && !strcmp(ret, extension)){
+        return 1;
+    }
+    
+    else
+        return 0;
+    
+}
 
 void dictionaryList(LinkedList* dictionarys) {
     
@@ -81,8 +101,12 @@ void dictionaryList(LinkedList* dictionarys) {
                 
         while ((content = readdir(directory)) != NULL)
         {
-            dictionarys->next = newElement(content->d_name);
-            dictionarys = dictionarys->next;
+            
+            if((char*) content->d_name != NULL){
+                
+                dictionarys->next = newElement(content->d_name);
+                dictionarys = dictionarys->next;
+            }
             
         }
         

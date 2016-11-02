@@ -14,10 +14,11 @@
 
 int main(int argc, const char * argv[]) {
     
-    char* filename = "source.txt";
+    char* filename = NULL;
     
     LinkedList* dictionarys = newElement(filename);
-
+    
+    //LinkedList* dictionarys;
     menu(dictionarys);
     
     return 0;

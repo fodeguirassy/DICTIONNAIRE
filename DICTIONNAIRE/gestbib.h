@@ -35,6 +35,7 @@ LinkedList* newElement(char* v);
 void printLinkedList(LinkedList* ll);
 void chooseDictionary(LinkedList* dictionary);
 void addWords(char*);
+int checkName(char* astring);
 
 
 #endif /* functions_h */
