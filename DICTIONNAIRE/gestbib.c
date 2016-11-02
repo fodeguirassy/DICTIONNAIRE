@@ -18,7 +18,7 @@ void menu(LinkedList* dictionary) {
     
     
     dictionaryList(dictionary);
-    printLinkedList(dictionary);
+    
     
     char* choice = malloc(sizeof(char));
     
@@ -37,6 +37,7 @@ void menu(LinkedList* dictionary) {
                 menu(dictionary);
                 break;
             case 50:
+                printLinkedList(dictionary);
                 chooseDictionary(dictionary);
                  menu(dictionary);
                 break;
@@ -51,14 +52,12 @@ void menu(LinkedList* dictionary) {
 
 
 LinkedList* newElement(char* v){
-    
     LinkedList* ll = malloc(sizeof(LinkedList));
     ll->value = v;
     ll->next = NULL;
     
     return ll;
 }
-
 
 void printLinkedList(LinkedList* ll){
     // boucle itérative tant que ll existe;
@@ -85,10 +84,8 @@ int checkName(char* astring){
     if(ret != NULL && !strcmp(ret, extension)){
         return 1;
     }
-    
     else
         return 0;
-    
 }
 
 void dictionaryList(LinkedList* dictionarys) {
@@ -101,15 +98,9 @@ void dictionaryList(LinkedList* dictionarys) {
                 
         while ((content = readdir(directory)) != NULL)
         {
-            
-            if((char*) content->d_name != NULL){
-                
                 dictionarys->next = newElement(content->d_name);
                 dictionarys = dictionarys->next;
-            }
-            
         }
-        
         closedir(directory);
     }
     else
@@ -168,24 +159,16 @@ void createDictionary(LinkedList* dictionarys){
         else
         {
             printf("ERROR WHILE CREATING THE NEW DICTIONARY\n");
-            
         }
     
     }
     else{
         printf("EMPTY NAMES ARE NOT ALLOWED\n");
     }
-    
-    
-
-    
     free(dictionaryName);
 }
 
 void chooseDictionary(LinkedList* dictionary) {
-    
-    printLinkedList(dictionary);
-    
     
     char* name = malloc(sizeof(char)*255);
     
@@ -194,20 +177,20 @@ void chooseDictionary(LinkedList* dictionary) {
     
     if(name != NULL){
         while(dictionary != NULL){
-            if(!strcmp(name,dictionary->value)){
-                menu2(name,dictionary);
+            
+            if(dictionary->value != NULL){
+                if(!strcmp(name,dictionary->value)){
+                    menu2(name,dictionary);
+                }
             }
             
             dictionary = dictionary->next;
         }
-        
     }else{
         printf("YOU'VE ENTERED A WRONG DICTIONNARY NAME\n");
         menu(dictionary);
     }
-    
-    free(name);
-    
+    //free(name);
 }
 
 void menu2(char* dictionary , LinkedList* dictionaryList) {
@@ -257,7 +240,7 @@ void menu2(char* dictionary , LinkedList* dictionaryList) {
 
 void displayDictionary(char* dictionaryName){
     
-    printf("DICTIONARY NAME THAT YOU4RE WORKING ON IS %s\n",dictionaryName);
+    printf("DICTIONARY NAME THAT YOU'RE WORKING ON IS %s\n",dictionaryName);
     
     FILE* dictionary = fopen(dictionaryName,"r");
     
@@ -275,7 +258,6 @@ void displayDictionary(char* dictionaryName){
     
     fclose(dictionary);
     free(current);
-    
 }
 
 
@@ -328,10 +310,8 @@ void addWords(char* name){
         while(count < numberOfWords){
             printf("PLEASE ENTER THE NEW WORD YOU WOULD LIKE TO ADD TO THE DICTIONARY\n");
             scanf("%s",newWord);
-            
             fputs(newWord,dictionary);
             fputs("\n",dictionary);
-            
             count++;
         }
     }
