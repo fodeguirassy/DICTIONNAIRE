@@ -12,8 +12,10 @@
 #include <dirent.h>
 #include <sys/xattr.h>
 #include "gestbib.h"
+#include <ctype.h>
 
 
+//menu() Main menu to choose for create a new dictionary or choose an existing dictionary
 void menu(LinkedList* dictionary) {
     
     
@@ -21,9 +23,9 @@ void menu(LinkedList* dictionary) {
     
     char* choice = malloc(sizeof(char));
     
-    printf("\n---------------\nLE DICTIONNAIRE\n---------------\nChoose an option (1 to 2)\n\n");
-    printf("1. CREATE NEW DICTIONARY\n");
-    printf("2. USE A DICTIONARY\n");
+    printf("\n---------------\nTHE DICTIONARY\n---------------\nChoose an option (1 to 2)\n\n");
+    printf("1. Create new dictionary\n");
+    printf("2. Use an existing dictionary\n");
     
     do{
         scanf("%s",choice);
@@ -35,10 +37,10 @@ void menu(LinkedList* dictionary) {
             case 50:
                 printLinkedList(dictionary);
                 chooseDictionary(dictionary);
-                 menu(dictionary);
+                menu(dictionary);
                 break;
             default:
-                printf("INVALID CHOICE ! PLEASE TRY AGAIN\n");
+                printf("Invalid choice ! Please try again\n");
                 break;
         }
     }while(*choice != 49 && *choice != 50);
@@ -47,6 +49,7 @@ void menu(LinkedList* dictionary) {
 }
 
 
+//newElement() allows to create a new element in a linked list
 LinkedList* newElement(char* v){
     LinkedList* ll = malloc(sizeof(LinkedList));
     ll->value = v;
@@ -55,9 +58,10 @@ LinkedList* newElement(char* v){
     return ll;
 }
 
+//printLinkedList() allows to display all the existing dictionary's
 void printLinkedList(LinkedList* ll){
     
-    printf("\nHERE ARE THE DICTIONARYS YOU CAN USE\n");
+    printf("\nHere are the dictionarys you can use\n");
     
     // boucle itérative tant que ll existe;
     while(ll != NULL){
@@ -73,8 +77,9 @@ void printLinkedList(LinkedList* ll){
 
 }
 
+//checkName() allows to check if the needed file have ".txt" extension
 int checkName(char* astring){
-    
+     
     char dot = '.';
     char* extension = ".txt";
     
@@ -87,9 +92,11 @@ int checkName(char* astring){
         return 0;
 }
 
+
+//dictionaList() put all dictionary's of the directory in a linked list
 void dictionaryList(LinkedList* dictionarys) {
     
-    DIR* directory = opendir("/Users/fofofofodev/Desktop/ESGI 3A/SEMAINE C/DICTIONNAIRE/DICTIONARYS");
+    DIR* directory = opendir("./");
     
     if(directory != NULL) {
         
@@ -103,55 +110,20 @@ void dictionaryList(LinkedList* dictionarys) {
         closedir(directory);
     }
     else
-        printf("FAILED TO OPEN DIRECTORY");
+        printf("Failed to open dictionary");
 }
 
-void menu3(char* dictionaryName,LinkedList* dictionarys){
-    
-    printf("CHOOSE AN ACTION TO EXECUTE WITH YOUR NEW DICTIONARY - from 1 to 4\n");
-    printf("1 - ADD A NEW WORD TO THE NEW DICTIONARY\n");
-    printf("2 - SEARCH FOR WORDS IN THE NEW DICTIONARY\n");
-    printf("3 - DISPLAY WORDS IN THE NEW DICTIONARY\n");
-    printf("4 - GO BACK TO THE MAIN MENU\n");
-    
-    char *choice = malloc(sizeof(char));
-    do{
-        scanf("%s",choice);
-    
-        switch (*choice) {
-            case 49:
-                addWords(dictionaryName);
-                menu3(dictionaryName,dictionarys);
-                break;
-            case 50:
-                searchWord(dictionaryName);
-                menu3(dictionaryName,dictionarys);
-                break;
-            case 51:
-                displayDictionary(dictionaryName);
-                menu3(dictionaryName,dictionarys);
-                break;
-            case 52:
-                menu(dictionarys);
-                break;
-            default:
-                printf("\n\nPLEASE ENTER A VALID CHOICE\n\n");
-                break;
-        }
-    
-    }while(*choice != 49 && *choice != 50 && *choice != 51 && *choice != 52);
-}
 
+//createDictionary() allows to create a new dictionary
 void createDictionary(LinkedList* dictionarys){
     
     char* dictionaryName = malloc(sizeof(char)*255);
-    printf("ENTER A NAME FOR YOUR NEW DICTIONARY\n");
+    printf("Enter a name for your new dictionary\n");
     scanf("%s",dictionaryName);
     
+    strcat(dictionaryName, ".txt");
     
     if(dictionaryName != NULL){
-        char* extension = ".txt";
-        strcat(dictionaryName, extension);
         
         FILE* newDictionary = fopen(dictionaryName,"w");
         
@@ -159,93 +131,103 @@ void createDictionary(LinkedList* dictionarys){
             
             dictionaryList(dictionarys);
     
-            printf("\n\nYOUR NEW DICTIONARY HAS BEEN SUCCESFULLY CREATED\n\n");
+            printf("\n\nYour new dictionary has been succesfully created\n\n");
             
             fclose(newDictionary);
             
-            menu3(dictionaryName, dictionarys);
+            menu2(dictionaryName, dictionarys);
             
         }
         else
         {
-            printf("ERROR WHILE CREATING THE NEW DICTIONARY\n");
+            printf("Error while creating the new dictionary\n");
         }
     
     }
     else{
-        printf("EMPTY NAMES ARE NOT ALLOWED\n");
+        printf("Empty names are not allowed\n");
     }
     free(dictionaryName);
 }
 
+
+//chooseDictionary() allows to choose an existing dictionary
 void chooseDictionary(LinkedList* dictionary) {
     
     char* name = malloc(sizeof(char)*255);
     
-    printf("ENTER THE NAME OF THE DICTIONARY YOU WANT TO WORK ON\n");
+    printf("\nEnter the name of the dictionary you want to work on\n");
     scanf("%s",name);
     
-    if(name != NULL){
+    strcat(name, ".txt");
+    
+    if(name != NULL) {
+
         while(dictionary != NULL){
             
             if(dictionary->value != NULL){
                 if(!strcmp(name,dictionary->value)){
                     menu2(name,dictionary);
+                }else {
+                    printf("You've entered a wrong dictionary name\n");
+                    chooseDictionary(dictionary);
                 }
             }
             dictionary = dictionary->next;
         }
-    }else{
-        printf("YOU'VE ENTERED A WRONG DICTIONNARY NAME\n");
-        menu(dictionary);
+    }else {
+        
     }
+    
     free(name);
 }
 
+//menu2() second menu linked to a dictionary (created or choosen)
 void menu2(char* dictionary , LinkedList* dictionaryList) {
     
-    int action = 0;
+    char* action = malloc(sizeof(char));
     
-    printf("\n--------\n  MENU\n--------\nChoose an option (1 to 6)\n\n");
-    printf("1. SEARCH FOR A WORD IN THE DICTIONARY\n");
-    printf("2. DISPLAY WORDS IN THE DICTIONARY\n");
-    printf("3. ADD A WORD IN THE DICTIONARY\n");
-    printf("4. DESTROY THE DICTIONARY\n");
-    printf("5. GO BACK TO THE MAIN MENU\n");
+    printf("\n--------\n  MENU\n--------\nChoose an option (1 to 5)\n\n");
+    printf("1. Search for a word in the dictionary\n");
+    printf("2. Display words in the dictionary\n");
+    printf("3. Add a word in the dictionary\n");
+    printf("4. Destroy the dictionary\n");
+    printf("5. Go back to the main menu\n");
     
     do {
-        scanf("%d",&action);
+        scanf("%s",action);
         
-        switch (action) {
-            case 1:
+        switch (*action) {
+            case 49:
                 searchWord(dictionary);
                 menu2(dictionary,dictionaryList);
                 break;
-            case 2:
+            case 50:
                 displayDictionary(dictionary);
                 menu2(dictionary, dictionaryList);
                 break;
-            case 3:
+            case 51:
                 addWords(dictionary);
-                menu2(dictionary,dictionaryList);
+                //menu2(dictionary,dictionaryList);
                 break;
-            case 4:
-                //deleteDictionary();
+            case 52:
+                deleteDictionary(dictionary,dictionaryList);
                 break;
-            case 5:
+            case 53:
                 menu(dictionaryList);
                 break;
             default:
-                printf("Saisie incorrecte ! Réessayer\n");
+                printf("Wrong entry ! Please retry\n");
                 break;
         }
-    }while (action != 1 && action != 2 && action != 3 && action != 4 && action != 5);
+    }while(*action != 49 && *action != 50 && *action != 51 && *action != 52 && *action != 53);
     
 }
 
+//displayDictionary() allows to display words of a dictionary (created or choosen)
 void displayDictionary(char* dictionaryName){
     
-    printf("DICTIONARY NAME THAT YOU'RE WORKING ON IS %s\n",dictionaryName);
+    printf("Dictionary name that you're working on is %s\n",dictionaryName);
     
     FILE* dictionary = fopen(dictionaryName,"r");
     
@@ -258,7 +240,7 @@ void displayDictionary(char* dictionaryName){
         }
     }
     else{
-        printf("THE DICTIONARY IS NOT AVAILABLE\n");
+        printf("The dictionary is not available\n");
     }
     
     fclose(dictionary);
@@ -266,6 +248,7 @@ void displayDictionary(char* dictionaryName){
 }
 
 
+//searchWord() allows to search a word in a dictionary (created or choosen)
 void searchWord(char* name){
     
     char *wordToFind = malloc(sizeof(char)*255);
@@ -278,8 +261,8 @@ void searchWord(char* name){
     FILE* dictionary = fopen(name,"r+");
     
     if(dictionary != NULL){
-        
-        printf("\n\nPLEASE ENTER THE WORD YOU WOULD LIKE TO FIND\n\n");
+    
+        printf("\n\nPlease enter the word you would like to find\n\n");
         scanf("%s",wordToFind);
         
         while(fgets(answer, 255, dictionary)){
@@ -292,48 +275,137 @@ void searchWord(char* name){
         }
         
         if(result){
-            printf("\n\n%s HAS BEEN FOUND AT LINE NUMBER %d\n\n",wordToFind,lineNumber);
+            printf("\n\n%s has been found at line number %d\n\n",wordToFind,lineNumber);
         }
         else{
-            printf("\n\nTHE WORD YOU'VE ENTERED DOESN'T EXIST IN THIS DICTIONARY\n\n");
+            printf("\n\nThe word you've entered doesn't exist in this dictionary\n\n");
         }
         
     }
     else
-        printf("\n\nERROR WHILE OPENING THE DICTIONARY\n\n");
+        printf("\n\Error while opening the dictionary\n\n");
     
     fclose(dictionary);
     free(answer);
     free(wordToFind);
 }
 
+//deleteWords() allows to delete a word of a dictionary (created or choosen)
+void deleteWord(char* name){
+    
+    char *wordToFind = malloc(sizeof(char)*255);
+    char *answer = malloc(sizeof(char)*1026);
+    
+    int lineCounter = 0;
+    int lineNumber = 0;
+    int result = 0;
+    
+    FILE* dictionary = fopen(name,"r+");
+    
+    if(dictionary != NULL){
+        
+        printf("\n\nPlease enter the word you would like to find\n\n");
+        scanf("%s",wordToFind);
+        
+        while(fgets(answer, 255, dictionary)){
+            lineCounter++;
+            answer[strcspn(answer, "\n")] = '\0';
+            if(!strcmp(answer, wordToFind)){
+                result = 1;
+                lineNumber = lineCounter;
+            }
+        }
+        
+        if(result){
+            printf("\n\n%s has been found at line number %d\n\n",wordToFind,lineNumber);
+        }
+        else{
+            printf("\n\nThe word you've entered doesn't exist in this dictionary\n\n");
+        }
+        
+    }
+    else
+    printf("\n\Error while opening the dictionary\n\n");
+    
+    fclose(dictionary);
+    free(answer);
+    free(wordToFind);
+}
 
+//addWords() allows to add words to a dictionary (created or choosen)
 void addWords(char* name){
     
     int numberOfWords;
-    
-    printf("HOW MANY WORDS WOULD YOU LIKE TO ADD TO THE DICTIONARY\n");
-    scanf("%d",&numberOfWords);
-    
     int count = 0;
     char* newWord = malloc(sizeof(char)*255);
-    FILE* dictionary = fopen(name,"w");
     
-    if(dictionary){
+    printf("How many words would you like to add to the dictionary\n");
+    scanf("%d",&numberOfWords);
+    
+    //if(isdigit(numberOfWords)) {
+        FILE* dictionary = fopen(name,"a+");
         
-        while(count < numberOfWords){
-            printf("\nPLEASE ENTER THE NEW WORD YOU WOULD LIKE TO ADD TO THE DICTIONARY\n");
-            scanf("%s",newWord);
-            fputs(newWord,dictionary);
-            fputs("\n",dictionary);
-            count++;
+        if(dictionary){
+            
+            printf("\nPlease enter the new word you would like to add to the dictionary\n");
+            
+            while(count < numberOfWords){
+                scanf("%s",newWord);
+                fputs(newWord,dictionary);
+                fputs("\n",dictionary);
+                count++;
+            }
+            
+            printf("\nYour words have been added succesfully\n");
         }
-    }
-    else{
-        printf("\nERROR WHILE OPENNING THE DICTIONARY \n\n");
-    }
-    fclose(dictionary);
+        else{
+            printf("\nError while oppening the dictionary \n\n");
+        }
+        fclose(dictionary);
+    //}else {
+      //  printf("Wrong entry ! Please retry\n");
+        //addWords(name);
+    //}
+    
     free(newWord);
     
+}
+
+//deleteDictionary() allows to delete a dictionary
+void deleteDictionary(char* name, LinkedList* dictionaryList) {
+    
+    char* choice = malloc(sizeof(char));
+    
+    FILE* dictionary = fopen(name,"w+");
+    
+    if(dictionary != NULL) {
+        
+        printf("\nAre you sure you want to delete %s y/n\n",name);
+        
+        do {
+            scanf("%s",choice);
+            switch (*choice) {
+                case 121:
+                remove(name);
+                break;
+                case 110:
+                menu2(name, dictionaryList);
+                break;
+                default:
+                printf("Wrong entry ! Please retry\n");
+                break;
+            }
+        }while(*choice != 121 && *choice != 110);
+        
+        printf("\nThe dictionary %s has been deleted succesfully\n\n",name);
+        
+        menu(dictionaryList);
+        
+        fclose(dictionary);
+    }else {
+        printf("Error !");
+        menu(dictionaryList);
+        fclose(dictionary);
+    }
 }
 
