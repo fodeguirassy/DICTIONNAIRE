@@ -19,7 +19,6 @@ void menu(LinkedList* dictionary) {
     
     dictionaryList(dictionary);
     
-    
     char* choice = malloc(sizeof(char));
     
     printf("\n---------------\nLE DICTIONNAIRE\n---------------\nChoose an option (1 to 2)\n\n");
@@ -57,6 +56,9 @@ LinkedList* newElement(char* v){
 }
 
 void printLinkedList(LinkedList* ll){
+    
+    printf("\nHERE ARE THE DICTIONARYS YOU CAN USE\n");
+    
     // boucle itérative tant que ll existe;
     while(ll != NULL){
         if(ll->value != NULL){
@@ -68,7 +70,7 @@ void printLinkedList(LinkedList* ll){
         // ll courant devient ll d'après
         //L'équivalent de l'incrémentation d'une variable
     }
-    printf("\n");
+
 }
 
 int checkName(char* astring){

@@ -13,10 +13,8 @@
 
 
 int main(int argc, const char * argv[]) {
-    
-    char* filename = NULL;
-    
-    LinkedList* dictionarys = newElement(filename);
+        
+    LinkedList* dictionarys = newElement(NULL);
     
     //LinkedList* dictionarys;
     menu(dictionarys);
