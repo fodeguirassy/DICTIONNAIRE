@@ -22,20 +22,15 @@ typedef struct LinkedList LinkedList;
 void menu(LinkedList* dictio);
 void menu2(char*,LinkedList*);
 void createDictionary(LinkedList*);
-//void chooseDictionary(LinkedList*);
-//void eraseExistingFile(LinkedList*);
-//void createNewDictionary(FILE*, char*, char*,LinkedList*);
-//void addWordsToDictionary(FILE*, char*, char*,LinkedList*);
 void searchWord(char*);
 void displayDictionary(char*);
-//void deleteWord(FILE*, char*, char*,LinkedList*);
-//void deleteDictionary(FILE*, char*, char*,LinkedList*);
 void dictionaryList(LinkedList*);
 LinkedList* newElement(char* v);
 void printLinkedList(LinkedList* ll);
 void chooseDictionary(LinkedList* dictionary);
 void addWords(char*);
 int checkName(char* astring);
+void menu3(char*,LinkedList*);
 
 
 #endif /* functions_h */

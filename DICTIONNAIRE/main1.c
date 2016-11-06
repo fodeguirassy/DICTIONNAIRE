@@ -21,6 +21,8 @@ int main(int argc, const char * argv[]) {
     //LinkedList* dictionarys;
     menu(dictionarys);
     
+    
+    
     return 0;
 }
 
