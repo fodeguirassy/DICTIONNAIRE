@@ -19,18 +19,19 @@ struct LinkedList{
 
 typedef struct LinkedList LinkedList;
 
-void menu(LinkedList* dictio);
+void menu(LinkedList*);
 void menu2(char*,LinkedList*);
 void createDictionary(LinkedList*);
 void searchWord(char*);
 void displayDictionary(char*);
 void dictionaryList(LinkedList*);
-LinkedList* newElement(char* v);
-void printLinkedList(LinkedList* ll);
-void chooseDictionary(LinkedList* dictionary);
+LinkedList* newElement(char*);
+void printLinkedList(LinkedList*);
+void chooseDictionary(LinkedList*);
 void addWords(char*);
-int checkName(char* astring);
-void menu3(char*,LinkedList*);
+int checkName(char*);
+void deleteDictionary(char*, LinkedList*);
+void deleteWord(char*);
 
 
 #endif /* functions_h */

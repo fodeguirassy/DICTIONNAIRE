@@ -16,10 +16,7 @@ int main(int argc, const char * argv[]) {
         
     LinkedList* dictionarys = newElement(NULL);
     
-    //LinkedList* dictionarys;
     menu(dictionarys);
-    
-    
     
     return 0;
 }
