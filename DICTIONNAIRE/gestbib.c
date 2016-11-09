@@ -99,6 +99,7 @@ void dictionaryList(LinkedList* dictionarys) {
         {
                 dictionarys->next = newElement(content->d_name);
                 dictionarys = dictionarys->next;
+            
         }
         closedir(directory);
     }
