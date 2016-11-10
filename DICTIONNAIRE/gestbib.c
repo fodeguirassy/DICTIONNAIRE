@@ -20,7 +20,7 @@ void menu(LinkedList* dictionary) {
     
     
     dictionaryList(dictionary);
-    
+
     char* choice = malloc(sizeof(char));
     
     printf("\n---------------\nTHE DICTIONARY\n---------------\nChoose an option (1 to 2)\n\n");
@@ -37,7 +37,7 @@ void menu(LinkedList* dictionary) {
             case 50:
                 printLinkedList(dictionary);
                 chooseDictionary(dictionary);
-                menu(dictionary);
+                //menu(dictionary);
                 break;
             default:
                 printf("Invalid choice ! Please try again\n");
@@ -63,7 +63,6 @@ void printLinkedList(LinkedList* ll){
     
     printf("\nHere are the dictionarys you can use\n");
     
-    // boucle itérative tant que ll existe;
     while(ll != NULL){
         if(ll->value != NULL){
             if(checkName(ll->value)){
@@ -71,10 +70,7 @@ void printLinkedList(LinkedList* ll){
             }
         }
         ll = ll->next;
-        // ll courant devient ll d'après
-        //L'équivalent de l'incrémentation d'une variable
     }
-
 }
 
 //checkName() allows to check if the needed file have ".txt" extension
@@ -104,13 +100,15 @@ void dictionaryList(LinkedList* dictionarys) {
                 
         while ((content = readdir(directory)) != NULL)
         {
+            if(checkName(content->d_name)){
                 dictionarys->next = newElement(content->d_name);
                 dictionarys = dictionarys->next;
+            }
         }
         closedir(directory);
-    }
-    else
+    }else {
         printf("Failed to open dictionary");
+    }
 }
 
 
@@ -118,35 +116,38 @@ void dictionaryList(LinkedList* dictionarys) {
 void createDictionary(LinkedList* dictionarys){
     
     char* dictionaryName = malloc(sizeof(char)*255);
-    printf("Enter a name for your new dictionary\n");
-    scanf("%s",dictionaryName);
+    int create = 0;
+    dictionaryList(dictionarys);
     
-    strcat(dictionaryName, ".txt");
-    
-    if(dictionaryName != NULL){
+    do {
+        printf("Enter a name for your new dictionary\n");
+        scanf("%s",dictionaryName);
+        strcat(dictionaryName, ".txt");
         
-        FILE* newDictionary = fopen(dictionaryName,"w");
-        
-        if(newDictionary != NULL){
+        if(dictionaryName != NULL){
+            if(dictionarys->value == NULL) {
+                dictionarys = dictionarys->next;
+            }
+            FILE* newDictionary = fopen(dictionarys->value,"w");
             
-            dictionaryList(dictionarys);
-    
-            printf("\n\nYour new dictionary has been succesfully created\n\n");
+            while(newDictionary != NULL){
+                create = 1;
+                dictionaryList(dictionarys);
+                
+                printf("\nYour new dictionary has been succesfully created\n\n");
+                
+                fclose(newDictionary);
+                
+                menu2(dictionaryName, dictionarys);
+                
+            }
             
-            fclose(newDictionary);
-            
-            menu2(dictionaryName, dictionarys);
-            
+        }else{
+            printf("Empty names are not allowed\n");
         }
-        else
-        {
-            printf("Error while creating the new dictionary\n");
-        }
+        printf("This dictionary already exist, please retry\n");
+    }while(!create);
     
-    }
-    else{
-        printf("Empty names are not allowed\n");
-    }
     free(dictionaryName);
 }
 
@@ -155,30 +156,47 @@ void createDictionary(LinkedList* dictionarys){
 void chooseDictionary(LinkedList* dictionary) {
     
     char* name = malloc(sizeof(char)*255);
+    char* choice = malloc(sizeof(char));
     
-    printf("\nEnter the name of the dictionary you want to work on\n");
-    scanf("%s",name);
-    
-    strcat(name, ".txt");
-    
-    if(name != NULL) {
-
-        while(dictionary != NULL){
-            
-            if(dictionary->value != NULL){
-                if(!strcmp(name,dictionary->value)){
-                    menu2(name,dictionary);
-                }else {
-                    printf("You've entered a wrong dictionary name\n");
-                    chooseDictionary(dictionary);
-                }
-            }
-            dictionary = dictionary->next;
-        }
-    }else {
-        
+    if(dictionary->value == NULL) {
+        dictionary = dictionary->next;
     }
     
+    int found = 0;
+    do {
+        LinkedList* head = dictionary;
+        printf("\nEnter the name of the dictionary you want to work on\n");
+        scanf("%s",name);
+        strcat(name, ".txt");
+        
+        while(head != NULL && head->value != NULL){
+            if(strcmp(name, head->value) == 0){
+                menu2(name,head);
+                found = 1;
+                break;
+            }
+            head = head->next;
+        }
+        printf("This dictionary doesn't exist, would you like to create one ? y/n\n");
+        scanf("%s",choice);
+        do {
+            switch (*choice) {
+                case 121:
+                createDictionary(dictionary);
+                break;
+                
+                case 110:
+                continue;
+                break;
+                
+                default:
+                printf("Wrong entry ! Please retry\n");
+                break;
+            }
+        }while (*choice != 121 && *choice != 110);
+        
+    }while(!found);
+
     free(name);
 }
 
@@ -191,8 +209,9 @@ void menu2(char* dictionary , LinkedList* dictionaryList) {
     printf("1. Search for a word in the dictionary\n");
     printf("2. Display words in the dictionary\n");
     printf("3. Add a word in the dictionary\n");
-    printf("4. Destroy the dictionary\n");
-    printf("5. Go back to the main menu\n");
+    printf("4. Delete word in the dictionary\n");
+    printf("5. Destroy the dictionary\n");
+    printf("6. Go back to the main menu\n");
     
     do {
         scanf("%s",action);
@@ -208,12 +227,15 @@ void menu2(char* dictionary , LinkedList* dictionaryList) {
                 break;
             case 51:
                 addWords(dictionary);
-                //menu2(dictionary,dictionaryList);
+                menu2(dictionary,dictionaryList);
                 break;
             case 52:
-                deleteDictionary(dictionary,dictionaryList);
+                deleteWord(dictionary);
                 break;
             case 53:
+                deleteDictionary(dictionary,dictionaryList);
+                break;
+            case 54:
                 menu(dictionaryList);
                 break;
             default:
@@ -293,7 +315,7 @@ void searchWord(char* name){
 //deleteWords() allows to delete a word of a dictionary (created or choosen)
 void deleteWord(char* name){
     
-    char *wordToFind = malloc(sizeof(char)*255);
+    char *wordToDelete = malloc(sizeof(char)*255);
     char *answer = malloc(sizeof(char)*1026);
     
     int lineCounter = 0;
@@ -304,20 +326,21 @@ void deleteWord(char* name){
     
     if(dictionary != NULL){
         
-        printf("\n\nPlease enter the word you would like to find\n\n");
-        scanf("%s",wordToFind);
+        printf("\n\nPlease enter the word you would like to delete\n\n");
+        scanf("%s",wordToDelete);
         
         while(fgets(answer, 255, dictionary)){
             lineCounter++;
             answer[strcspn(answer, "\n")] = '\0';
-            if(!strcmp(answer, wordToFind)){
+            if(!strcmp(answer, wordToDelete)){
+                //fseek(dictionary, lenght(answer), SEEK_CUR);
                 result = 1;
                 lineNumber = lineCounter;
             }
         }
         
         if(result){
-            printf("\n\n%s has been found at line number %d\n\n",wordToFind,lineNumber);
+            printf("\n\n%s has been found at line number %d\n\n",wordToDelete,lineNumber);
         }
         else{
             printf("\n\nThe word you've entered doesn't exist in this dictionary\n\n");
@@ -329,7 +352,7 @@ void deleteWord(char* name){
     
     fclose(dictionary);
     free(answer);
-    free(wordToFind);
+    free(wordToDelete);
 }
 
 //addWords() allows to add words to a dictionary (created or choosen)
