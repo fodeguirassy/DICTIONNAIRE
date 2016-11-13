@@ -13,7 +13,7 @@
 #include <sys/xattr.h>
 #include "gestbib.h"
 #include <ctype.h>
-
+#include <regex.h>
 
 //menu() Main menu to choose for create a new dictionary or choose an existing dictionary
 void menu(LinkedList* dictionary) {
@@ -23,7 +23,7 @@ void menu(LinkedList* dictionary) {
 
     char* choice = malloc(sizeof(char));
     
-    printf("\n---------------\nTHE DICTIONARY\n---------------\nChoose an option (1 to 2)\n\n");
+    printf("--------------\nTHE DICTIONARY\n--------------\nChoose an option (1 to 2)\n\n");
     printf("1. Create new dictionary\n");
     printf("2. Use an existing dictionary\n");
     
@@ -37,7 +37,6 @@ void menu(LinkedList* dictionary) {
             case 50:
                 printLinkedList(dictionary);
                 chooseDictionary(dictionary);
-                //menu(dictionary);
                 break;
             default:
                 printf("Invalid choice ! Please try again\n");
@@ -117,7 +116,12 @@ void createDictionary(LinkedList* dictionarys){
     
     char* dictionaryName = malloc(sizeof(char)*255);
     int create = 0;
-    dictionaryList(dictionarys);
+    //dictionaryList(dictionarys);
+    FILE* newDictionary = NULL;
+    
+    if(dictionarys->value == NULL) {
+        dictionarys = dictionarys->next;
+    }
     
     do {
         printf("Enter a name for your new dictionary\n");
@@ -125,21 +129,18 @@ void createDictionary(LinkedList* dictionarys){
         strcat(dictionaryName, ".txt");
         
         if(dictionaryName != NULL){
-            if(dictionarys->value == NULL) {
-                dictionarys = dictionarys->next;
-            }
-            FILE* newDictionary = fopen(dictionarys->value,"w");
             
-            while(newDictionary != NULL){
-                create = 1;
+            newDictionary = fopen(dictionaryName,"r+");
+        
+            if(newDictionary == NULL){
+                newDictionary = fopen(dictionaryName, "w");
                 dictionaryList(dictionarys);
-                
+                create = 1;
                 printf("\nYour new dictionary has been succesfully created\n\n");
-                
                 fclose(newDictionary);
-                
                 menu2(dictionaryName, dictionarys);
-                
+            }else {
+                fclose(newDictionary);
             }
             
         }else{
@@ -278,34 +279,50 @@ void searchWord(char* name){
     
     int lineCounter = 0;
     int lineNumber = 0;
+    int count = 0;
     int result = 0;
+    int returnScanf = 0;
     
     FILE* dictionary = fopen(name,"r+");
     
     if(dictionary != NULL){
     
-        printf("\n\nPlease enter the word you would like to find\n\n");
-        scanf("%s",wordToFind);
-        
-        while(fgets(answer, 255, dictionary)){
-            lineCounter++;
-            answer[strcspn(answer, "\n")] = '\0';
-            if(!strcmp(answer, wordToFind)){
-                result = 1;
-                lineNumber = lineCounter;
+        do {
+            printf("\nPlease enter the word you would like to find\n");
+            getchar();
+            returnScanf = scanf("%[a-zA-Z]s",wordToFind);
+            scanf ("%*[^\n]");
+            
+            if(returnScanf != 0) {
+                count = 1;
+                while(fgets(answer, 255, dictionary)){
+                    lineCounter++;
+                    answer[strcspn(answer, "\n")] = '\0';
+                    if(!strcmp(answer, wordToFind)){
+                        result = 1;
+                        lineNumber = lineCounter;
+                    }
+                }
+                
+                if(result){
+                    printf("\n%s has been found at line number %d\n",wordToFind,lineNumber);
+                }
+                else{
+                    printf("\nThe word you've entered doesn't exist in this dictionary\n");
+                }
+                
+            }else {
+                printf("\nYour input can contain letters only ! Please retry\n");
             }
-        }
+            
+        }while(!count);
         
-        if(result){
-            printf("\n\n%s has been found at line number %d\n\n",wordToFind,lineNumber);
-        }
-        else{
-            printf("\n\nThe word you've entered doesn't exist in this dictionary\n\n");
-        }
+        
+    }else {
+     
+        printf("\n\Error while opening the dictionary\n\n");
         
     }
-    else
-        printf("\n\Error while opening the dictionary\n\n");
     
     fclose(dictionary);
     free(answer);
@@ -358,39 +375,53 @@ void deleteWord(char* name){
 //addWords() allows to add words to a dictionary (created or choosen)
 void addWords(char* name){
     
-    int numberOfWords;
+    char* numberOfWords = malloc(sizeof(char));
+    int nb = 0;
     int count = 0;
+    int cpt = 0;
     char* newWord = malloc(sizeof(char)*255);
+    int returnScanf;
     
-    printf("How many words would you like to add to the dictionary\n");
-    scanf("%d",&numberOfWords);
-    
-    //if(isdigit(numberOfWords)) {
-        FILE* dictionary = fopen(name,"a+");
+    do {
+        printf("How many words would you like to add to the dictionary\n");
+        getchar();
+        returnScanf = scanf("%[0-9]s",numberOfWords);
+        scanf ("%*[^\n]");
+
+        if(returnScanf != 0) {
+            cpt = 1;
+            FILE* dictionary = fopen(name,"a+");
         
-        if(dictionary){
+            if(dictionary){
+                printf("\nPlease enter the new word you would like to add to the dictionary\n");
+                nb = atoi(numberOfWords);
+                printf("number %d",nb);
+                while(count < nb){
+                    getchar();
+                    returnScanf = scanf("%[a-z]s",newWord);
+                    scanf ("%*[^\n]");
+                    if(returnScanf != 0) {
+                        fputs(newWord,dictionary);
+                        fputs("\n",dictionary);
+                        count++;
+                    }else {
+                        printf("Your input can contain letters only ! Please retry\n");
+                    }
+                }
             
-            printf("\nPlease enter the new word you would like to add to the dictionary\n");
-            
-            while(count < numberOfWords){
-                scanf("%s",newWord);
-                fputs(newWord,dictionary);
-                fputs("\n",dictionary);
-                count++;
+                printf("\nYour words have been added succesfully\n");
             }
-            
-            printf("\nYour words have been added succesfully\n");
+            else{
+                printf("\nError while oppening the dictionary \n\n");
+            }
+            fclose(dictionary);
+        }else {
+            printf("Your input can contain numbers only ! Please retry\n");
         }
-        else{
-            printf("\nError while oppening the dictionary \n\n");
-        }
-        fclose(dictionary);
-    //}else {
-      //  printf("Wrong entry ! Please retry\n");
-        //addWords(name);
-    //}
+    }while(!cpt);
     
     free(newWord);
+    free(numberOfWords);
     
 }
 
