@@ -168,6 +168,11 @@ void chooseDictionary(LinkedList* dictionary) {
         LinkedList* head = dictionary;
         printf("\nEnter the name of the dictionary you want to work on\n");
         scanf("%s",name);
+        
+        if(strcmp(name,"\e") == 0) {
+            menu(dictionary);
+        }
+        
         strcat(name, ".txt");
         
         while(head != NULL && head->value != NULL){
@@ -178,27 +183,28 @@ void chooseDictionary(LinkedList* dictionary) {
             }
             head = head->next;
         }
-        printf("This dictionary doesn't exist, would you like to create one ? y/n\n");
-        scanf("%s",choice);
+        
         do {
+            printf("This dictionary doesn't exist, would you like to create one ? y/n\n");
+            scanf("%s",choice);
             switch (*choice) {
                 case 121:
-                createDictionary(dictionary);
-                break;
+                    createDictionary(dictionary);
+                    break;
                 
                 case 110:
-                continue;
-                break;
+                    continue;
+                    break;
                 
                 case 27:
-                printf("escape");
-                break;
+                    menu(dictionary);
+                    break;
                     
                 default:
-                printf("Wrong entry ! Please retry\n");
-                break;
+                    printf("Wrong entry ! Please retry\n");
+                    break;
             }
-        }while (*choice != 121 && *choice != 110);
+        }while (*choice != 121 && *choice != 110 && *choice != 27);
         
     }while(!found);
 
@@ -223,7 +229,7 @@ void menu2(char* dictionary , LinkedList* dictionaryList) {
         
         switch (*action) {
             case 49:
-                searchWord(dictionary);
+                searchWord(dictionary,dictionaryList);
                 menu2(dictionary,dictionaryList);
                 break;
             case 50:
@@ -276,7 +282,7 @@ void displayDictionary(char* dictionaryName){
 
 
 //searchWord() allows to search a word in a dictionary (created or choosen)
-void searchWord(char* name){
+void searchWord(char* name, LinkedList* dictionarys){
     
     char *wordToFind = malloc(sizeof(char)*255);
     char *answer = malloc(sizeof(char)*1026);
@@ -295,8 +301,12 @@ void searchWord(char* name){
             printf("\nPlease enter the word you would like to find\n");
             getchar();
             returnScanf = scanf("%[a-zA-Z]s",wordToFind);
-            scanf ("%*[^\n]");
             
+            
+            if(strcmp(wordToFind, "\e") == 0) {
+                menu2(name, dictionarys);
+            }
+            scanf ("%*[^\n]");
             if(returnScanf != 0) {
                 count = 1;
                 while(fgets(answer, 255, dictionary)){
@@ -366,7 +376,6 @@ void deleteWord(char* name){
         else{
             printf("\n\nThe word you've entered doesn't exist in this dictionary\n\n");
         }
-        
     }
     else
     printf("\n\Error while opening the dictionary\n\n");
@@ -399,17 +408,16 @@ void addWords(char* name){
             if(dictionary){
                 printf("\nPlease enter the new word you would like to add to the dictionary\n");
                 nb = atoi(numberOfWords);
-                printf("number %d",nb);
                 while(count < nb){
                     getchar();
                     returnScanf = scanf("%[a-z]s",newWord);
                     scanf ("%*[^\n]");
                     if(returnScanf != 0) {
-                        fputs(newWord,dictionary);
-                        fputs("\n",dictionary);
-                        count++;
+                            fputs(newWord,dictionary);
+                            fputs("\n",dictionary);
+                            count++;
                     }else {
-                        printf("Your input can contain letters only ! Please retry\n");
+                        printf("Your input can contain letters only and 2 minimum ! Please retry\n");
                     }
                 }
             
@@ -442,18 +450,25 @@ void deleteDictionary(char* name, LinkedList* dictionaryList) {
         
         do {
             scanf("%s",choice);
+            
             switch (*choice) {
                 case 121:
-                remove(name);
-                break;
+                    remove(name);
+                    break;
+                    
                 case 110:
-                menu2(name, dictionaryList);
-                break;
+                    menu2(name, dictionaryList);
+                    break;
+                    
+                case 27:
+                    menu2(name, dictionaryList);
+                    break;
+                    
                 default:
-                printf("Wrong entry ! Please retry\n");
-                break;
+                    printf("Wrong entry ! Please retry\n");
+                    break;
             }
-        }while(*choice != 121 && *choice != 110);
+        }while(*choice != 121 && *choice != 110 && *choice != 27);
         
         printf("\nThe dictionary %s has been deleted succesfully\n\n",name);
         

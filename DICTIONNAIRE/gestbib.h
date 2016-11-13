@@ -22,7 +22,7 @@ typedef struct LinkedList LinkedList;
 void menu(LinkedList*);
 void menu2(char*,LinkedList*);
 void createDictionary(LinkedList*);
-void searchWord(char*);
+void searchWord(char*, LinkedList*);
 void displayDictionary(char*);
 void dictionaryList(LinkedList*);
 LinkedList* newElement(char*);
