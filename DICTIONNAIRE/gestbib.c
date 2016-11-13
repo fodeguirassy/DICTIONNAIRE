@@ -160,9 +160,9 @@ void chooseDictionary(LinkedList* dictionary) {
     printf("\nEnter the name of the dictionary you want to work on\n");
     scanf("%s",name);
     
-    strcat(name, ".txt");
-    
     if(name != NULL) {
+        
+        strcat(name, ".txt");
 
         while(dictionary != NULL){
             
@@ -177,7 +177,7 @@ void chooseDictionary(LinkedList* dictionary) {
             dictionary = dictionary->next;
         }
     }else {
-        
+        printf("Empty names are not allowed\n");
     }
     
     free(name);
