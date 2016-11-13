@@ -190,6 +190,10 @@ void chooseDictionary(LinkedList* dictionary) {
                 continue;
                 break;
                 
+                case 27:
+                printf("escape");
+                break;
+                    
                 default:
                 printf("Wrong entry ! Please retry\n");
                 break;
