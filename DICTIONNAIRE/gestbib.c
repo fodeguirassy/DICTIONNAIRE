@@ -159,27 +159,10 @@ void chooseDictionary(LinkedList* dictionary) {
     char* name = malloc(sizeof(char)*255);
     char* choice = malloc(sizeof(char));
     
-
-    printf("\nEnter the name of the dictionary you want to work on\n");
-    scanf("%s",name);
-    
-    if(name != NULL) {
-        
-        strcat(name, ".txt");
-
-        while(dictionary != NULL){
-            
-            if(dictionary->value != NULL){
-                if(!strcmp(name,dictionary->value)){
-                    menu2(name,dictionary);
-                }else {
-                    printf("You've entered a wrong dictionary name\n");
-                    chooseDictionary(dictionary);
-                }
     if(dictionary->value == NULL) {
         dictionary = dictionary->next;
     }
-    
+
     int found = 0;
     do {
         LinkedList* head = dictionary;
@@ -195,9 +178,7 @@ void chooseDictionary(LinkedList* dictionary) {
             }
             head = head->next;
         }
-    }else {
-        printf("Empty names are not allowed\n");
-    }
+
         printf("This dictionary doesn't exist, would you like to create one ? y/n\n");
         scanf("%s",choice);
         do {
@@ -205,15 +186,12 @@ void chooseDictionary(LinkedList* dictionary) {
                 case 121:
                     createDictionary(dictionary);
                     break;
-                    
                 case 110:
                     continue;
                     break;
-                    
                 case 27:
                     printf("escape");
                     break;
-                    
                 default:
                     printf("Wrong entry ! Please retry\n");
                     break;
@@ -221,7 +199,6 @@ void chooseDictionary(LinkedList* dictionary) {
         }while (*choice != 121 && *choice != 110);
         
     }while(!found);
-    
     free(name);
 }
 

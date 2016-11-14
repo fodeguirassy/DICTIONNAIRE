@@ -17,7 +17,6 @@ void init(){
     
     printf("--------------\nTHE DICTIONARY PART 2\n--------------\n\n");
     
-    
     char* thresholdStr = getThreshold();
     
     int sign = getSign(thresholdStr);
@@ -25,14 +24,28 @@ void init(){
     int thresholdNumber = strToThreshold(thresholdStr, sign);
     
     if(thresholdNumber){
-        displayWords(thresholdStr, sign);
+        displayWords(thresholdNumber, sign);
     }
     else{
-        printf("Wrong entry \t try again!\n");
+        printf("Wrong entry! Would you like to try again? Enter y or n\n");
+        char* retry = malloc(sizeof(char));
+        
+        scanf("%s",retry);
+        do{
+            switch (*retry) {
+                case 121:
+                    init();
+                    break;
+                case 110:
+                    exit(0);
+                default:
+                    printf("Wrong entry! Enter y or n\n");
+                    break;
+            }
+        }while(!retry);
     }
     
 }
-
 // returns the threshold entered by user as
 char* getThreshold(){
     
