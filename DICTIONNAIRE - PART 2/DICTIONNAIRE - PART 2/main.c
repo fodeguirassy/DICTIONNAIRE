@@ -10,6 +10,7 @@
 #include "gestrech.h"
 
 int main(int argc, const char * argv[]) {
+    printf("--------------\nTHE DICTIONARY PART 2\n--------------\n\n");
     
     init();
     

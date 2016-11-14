@@ -15,7 +15,7 @@
 // launch the application
 void init(){
     
-    printf("--------------\nTHE DICTIONARY PART 2\n--------------\n\n");
+    int checked = 0;
     
     char* thresholdStr = getThreshold();
     
@@ -25,14 +25,14 @@ void init(){
     
     if(thresholdNumber){
         displayWords(thresholdNumber, sign);
+        checked = 1;
     }
     else{
-        printf("Wrong entry! Would you like to try again? Enter y or n\n");
         char* retry = malloc(sizeof(char));
-        
-        scanf("%s",retry);
+        printf("Wrong entry! Would you like to try again? Enter y or n\n");
         do{
-            switch (*retry) {
+            scanf("%s",retry);
+            switch (retry[0]) {
                 case 121:
                     init();
                     break;
@@ -42,13 +42,12 @@ void init(){
                     printf("Wrong entry! Enter y or n\n");
                     break;
             }
-        }while(!retry);
+        }while(!checked);
     }
     
 }
 // returns the threshold entered by user as
 char* getThreshold(){
-    
     char* threshold = malloc(sizeof(char)*255);
     printf("Enter the treshold you'd like to apply to your research\n");
     do{
@@ -74,7 +73,6 @@ int getSign(char* threshold){
 
 int strToThreshold(char* threshold, int sign){
     int number;
-    
     char* stringN = malloc(sizeof(char)*255);
     
     if(!sign){
@@ -96,14 +94,15 @@ int strToThreshold(char* threshold, int sign){
 // open dictionary and display words that fit given threshold
 void displayWords(int threshold,int sign){
     
-    char* filename = "source.txt";
     
+    
+    char* filename = "source.txt";
     FILE* dictionary = fopen(filename,"r+");
     if(!dictionary){
-        printf("ERROR WHILE OPENING DICTIONARY");
+        printf("Error while opening dictionary\n");
     }
     else{
-        printf("ENTER THE WORD YOU WOULD LIKE TO WORK WITH\n");
+        printf("Enter the word you would like to work with\n");
         char* wordToFind = malloc(sizeof(char)*255);
         scanf("%s",wordToFind);
         
