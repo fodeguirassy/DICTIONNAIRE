@@ -28,7 +28,7 @@ void dictionaryList(LinkedList*);
 LinkedList* newElement(char*);
 void printLinkedList(LinkedList*);
 void chooseDictionary(LinkedList*);
-void addWords(char*);
+void addWords(char*, LinkedList*);
 int checkName(char*);
 void deleteDictionary(char*, LinkedList*);
 void deleteWord(char*);
