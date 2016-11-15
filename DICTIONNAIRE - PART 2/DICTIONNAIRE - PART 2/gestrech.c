@@ -94,14 +94,15 @@ int strToThreshold(char* threshold, int sign){
 // open dictionary and display words that fit given threshold
 void displayWords(int threshold,int sign){
     
-    
-    
     char* filename = "source.txt";
     FILE* dictionary = fopen(filename,"r+");
     if(!dictionary){
         printf("Error while opening dictionary\n");
     }
     else{
+        
+        int displayed = 0;
+        
         printf("Enter the word you would like to work with\n");
         char* wordToFind = malloc(sizeof(char)*255);
         scanf("%s",wordToFind);
@@ -114,16 +115,80 @@ void displayWords(int threshold,int sign){
             if(!sign){
                 if(strcmp(wordToFind, wordFromFile) >= (threshold * (-1)) && strcmp(wordToFind, wordFromFile) <= 0){
                     printf("%s\n",wordFromFile);
+                    displayed = 1;
                 }
             }
             else{
                 if(strcmp(wordToFind, wordFromFile) >= 0 && strcmp(wordToFind, wordFromFile) <= threshold){
                     printf("%s\n",wordFromFile);
+                    displayed = 1;
                 }
             }
+        }
+        
+        if(!displayed){
+            char* choice = malloc(sizeof(char) *255);
+            
+            printf("The word you've entered isn't close to any other in this dictionary\n would you like to try with an other word? Enter y or n\n");
+            do{
+                scanf("%s", choice);
+                
+                switch (choice[0]){
+                    case 121:
+                        exit(0);
+                        break;
+                     case 110 :
+                        displayWords(threshold, sign);
+                        break;
+                    default:
+                        printf("Enter y or n\n");
+                        break;
+                }
+                
+            }while(choice[0] != 121 && choice[0] != 110);
             
         }
 
     }
     fclose(dictionary);
+}
+
+int getTheWordToSearch(char* word){
+    
+    printf("Enter the world you would like to work with\n");
+    scanf("%s",word);
+    
+    int checked = 1,i;
+    
+    for(i = 0; i < strlen(word); i++){
+        if(word[i] < 65 ||(word[i] > 90 && word[i] < 97) || word[i] > 122){
+            checked = 0;
+        }
+    }
+    
+    if(!checked){
+        printf("Please make sure you have entered a coorect word\n");
+        printf("\nWould you like to try again? Enter y or n\n");
+        
+        char* choice = malloc(sizeof(char)*255);
+        
+        do{
+            scanf("%s",choice);
+            switch (choice[0]) {
+                case 121:
+                    getTheWordToSearch(word);
+                    break;
+                case 110:
+                    exit(0);
+                    break;
+                default:
+                    printf("Enter y or n\n");
+                    break;
+            }
+            
+        }while(choice[0] != 121 && choice[0] != 110);
+        
+    }
+    
+    return checked;
 }

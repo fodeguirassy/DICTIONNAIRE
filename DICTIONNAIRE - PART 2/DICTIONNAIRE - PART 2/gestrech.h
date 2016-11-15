@@ -14,6 +14,7 @@ void init();
 int getSign(char*);
 int strToThreshold(char*, int);
 void displayWords(int,int);
+int getTheWordToSearch(char * word);
 
 
 #endif /* gestrech_h */
