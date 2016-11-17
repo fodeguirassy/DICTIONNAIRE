@@ -103,12 +103,10 @@ void displayWords(int threshold,int sign){
         
         int displayed = 0;
         
-        printf("Enter the word you would like to work with\n");
-        char* wordToFind = malloc(sizeof(char)*255);
-        scanf("%s",wordToFind);
+        //executes only if entered word is a real string
+        char* wordToFind = getTheWordToSearch();
         
         char* wordFromFile = malloc(sizeof(char)*255);
-        
         while (fgets(wordFromFile, 255, dictionary)) {
             
             wordFromFile[strcspn(wordFromFile, "\n")] = '\0';
@@ -125,7 +123,13 @@ void displayWords(int threshold,int sign){
                 }
             }
         }
+
         
+        free(wordToFind);
+        free(wordFromFile);
+        
+        
+        //launch a second try if word to search wasn't found
         if(!displayed){
             char* choice = malloc(sizeof(char) *255);
             
@@ -135,10 +139,10 @@ void displayWords(int threshold,int sign){
                 
                 switch (choice[0]){
                     case 121:
-                        exit(0);
+                        displayWords(threshold, sign);
                         break;
                      case 110 :
-                        displayWords(threshold, sign);
+                        exit(0);
                         break;
                     default:
                         printf("Enter y or n\n");
@@ -153,10 +157,12 @@ void displayWords(int threshold,int sign){
     fclose(dictionary);
 }
 
-int getTheWordToSearch(char* word){
+char* getTheWordToSearch(){
     
-    printf("Enter the world you would like to work with\n");
+    printf("Enter the word you would like to work with\n");
+    char* word = malloc(sizeof(char)*255);
     scanf("%s",word);
+    
     
     int checked = 1,i;
     
@@ -189,6 +195,6 @@ int getTheWordToSearch(char* word){
         }while(choice[0] != 121 && choice[0] != 110);
         
     }
+    return word;
     
-    return checked;
 }
