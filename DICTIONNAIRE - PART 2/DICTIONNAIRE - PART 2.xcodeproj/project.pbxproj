@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D1B571D1DD8F24900D4B042 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D1B571C1DD8F24900D4B042 /* main.c */; };
+		08F1E2B21DE1EAD5004112EE /* main2.c in Sources */ = {isa = PBXBuildFile; fileRef = 08F1E2B11DE1EAD5004112EE /* main2.c */; };
 		7D1B57251DD8F43600D4B042 /* gestrech.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D1B57241DD8F43600D4B042 /* gestrech.c */; };
 /* End PBXBuildFile section */
 
@@ -24,8 +24,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		08F1E2B11DE1EAD5004112EE /* main2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main2.c; sourceTree = "<group>"; };
 		7D1B57191DD8F24900D4B042 /* DICTIONNAIRE - PART 2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "DICTIONNAIRE - PART 2"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D1B571C1DD8F24900D4B042 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		7D1B57231DD8F41900D4B042 /* gestrech.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gestrech.h; sourceTree = "<group>"; };
 		7D1B57241DD8F43600D4B042 /* gestrech.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gestrech.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,7 +60,7 @@
 		7D1B571B1DD8F24900D4B042 /* DICTIONNAIRE - PART 2 */ = {
 			isa = PBXGroup;
 			children = (
-				7D1B571C1DD8F24900D4B042 /* main.c */,
+				08F1E2B11DE1EAD5004112EE /* main2.c */,
 				7D1B57231DD8F41900D4B042 /* gestrech.h */,
 				7D1B57241DD8F43600D4B042 /* gestrech.c */,
 			);
@@ -124,8 +124,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F1E2B21DE1EAD5004112EE /* main2.c in Sources */,
 				7D1B57251DD8F43600D4B042 /* gestrech.c in Sources */,
-				7D1B571D1DD8F24900D4B042 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +252,7 @@
 				7D1B57221DD8F24900D4B042 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

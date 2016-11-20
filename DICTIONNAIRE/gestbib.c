@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
-#include <sys/xattr.h>
+/*#include <sys/xattr.h>*/
 #include "gestbib.h"
 #include <ctype.h>
 #include <regex.h>
@@ -23,7 +23,7 @@ void menu(LinkedList* dictionary) {
     
     char* choice = malloc(sizeof(char));
     
-    printf("--------------\nTHE DICTIONARY\n--------------\nChoose an option (1 to 2)\n\n");
+    printf("-----------------------\nTHE DICTIONARY - PART 1\n-----------------------\nChoose an option (1 to 2)\n\n");
     printf("1. Create new dictionary\n");
     printf("2. Use an existing dictionary\n");
     
