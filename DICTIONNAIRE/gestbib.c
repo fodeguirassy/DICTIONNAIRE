@@ -306,7 +306,7 @@ void searchWord(char* name, LinkedList* dictionarys){
         do {
             printf("\nPlease enter the word you would like to find\n");
             getchar();
-            returnScanf = scanf("%[\ea-zA-Z]s",wordToFind);
+            returnScanf = scanf("%[\ea-zA-ZÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸàáâæçèéêëìíîïñòóôœùúûüýÿ'-]s",wordToFind);
             
             if(strcmp(wordToFind, "\e") == 0) {
                 menu2(name, dictionarys);
@@ -426,7 +426,7 @@ void addWords(char* name, LinkedList* dictionaryList){
                 nb = atoi(numberOfWords);
                 while(count < nb){
                     getchar();
-                    returnScanf = scanf("%[\ea-z]s",newWord);
+                    returnScanf = scanf("%[\ea-zÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸàáâæçèéêëìíîïñòóôœùúûüýÿ'-]s",newWord);
                     
                     if(strcmp(newWord, "\e") == 0){
                         addWords(name, dictionaryList);
