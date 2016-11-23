@@ -735,5 +735,3 @@ char* getTheWordToSearch(char* name, LinkedList* dictionarys){
     return word;
     
 }
-
-blabla
