@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7D1B57181DD8F24900D4B042"
-               BuildableName = "DICTIONNAIRE - PART 2"
-               BlueprintName = "DICTIONNAIRE - PART 2"
-               ReferencedContainer = "container:DICTIONNAIRE - PART 2.xcodeproj">
+               BlueprintIdentifier = "7D0A3BC71DB1168800B11A4C"
+               BuildableName = "DICTIONNAIRE"
+               BlueprintName = "DICTIONNAIRE"
+               ReferencedContainer = "container:DICTIONNAIRE.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7D1B57181DD8F24900D4B042"
-            BuildableName = "DICTIONNAIRE - PART 2"
-            BlueprintName = "DICTIONNAIRE - PART 2"
-            ReferencedContainer = "container:DICTIONNAIRE - PART 2.xcodeproj">
+            BlueprintIdentifier = "7D0A3BC71DB1168800B11A4C"
+            BuildableName = "DICTIONNAIRE"
+            BlueprintName = "DICTIONNAIRE"
+            ReferencedContainer = "container:DICTIONNAIRE.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,10 +56,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7D1B57181DD8F24900D4B042"
-            BuildableName = "DICTIONNAIRE - PART 2"
-            BlueprintName = "DICTIONNAIRE - PART 2"
-            ReferencedContainer = "container:DICTIONNAIRE - PART 2.xcodeproj">
+            BlueprintIdentifier = "7D0A3BC71DB1168800B11A4C"
+            BuildableName = "DICTIONNAIRE"
+            BlueprintName = "DICTIONNAIRE"
+            ReferencedContainer = "container:DICTIONNAIRE.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7D1B57181DD8F24900D4B042"
-            BuildableName = "DICTIONNAIRE - PART 2"
-            BlueprintName = "DICTIONNAIRE - PART 2"
-            ReferencedContainer = "container:DICTIONNAIRE - PART 2.xcodeproj">
+            BlueprintIdentifier = "7D0A3BC71DB1168800B11A4C"
+            BuildableName = "DICTIONNAIRE"
+            BlueprintName = "DICTIONNAIRE"
+            ReferencedContainer = "container:DICTIONNAIRE.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
