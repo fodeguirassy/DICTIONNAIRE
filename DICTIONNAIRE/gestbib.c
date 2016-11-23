@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
-/*#include <sys/xattr.h>*/
 #include "gestbib.h"
 #include <ctype.h>
 #include <regex.h>
@@ -506,4 +505,5 @@ void deleteDictionary(char* name, LinkedList* dictionaryList) {
         fclose(dictionary);
     }
 }
+
 

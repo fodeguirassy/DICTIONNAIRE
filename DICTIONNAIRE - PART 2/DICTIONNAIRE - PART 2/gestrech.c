@@ -602,7 +602,9 @@ void capital(char *string)
 //compare strings to find different caracter
 int my_strcmp(char* str1, char* str2) {
     
-    int count = 0, i;
+    int count = 0;
+    int i;
+    int j;
     char* str = malloc(sizeof(char));
     
     capital(str1);
@@ -615,14 +617,12 @@ int my_strcmp(char* str1, char* str2) {
     }
     
     for (i = 0; str[i] != '\0'; i++) {
-        
-        if(str1[i] != str2[i]) {
-            if(str2[i] > 127) {
-                count--;
-            }else {
-                count++;
+        for(j = 0; j < strlen(str1); j++) {
+            if(strcmp(str1,str2) == 0) {
+                if(str1[i] != str2[i]) {
+                    count++;
+                }
             }
-            
         }
     }
     
