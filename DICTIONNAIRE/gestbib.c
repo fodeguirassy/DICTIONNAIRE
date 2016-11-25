@@ -394,14 +394,19 @@ void deleteWord(char* name){
     free(wordToDelete);
 }
 
+int strcmp_alpha(const void* str1, const void* str2) {
+    return strcmp(* (char * const *) str1, * (char * const *) str2);
+}
+
 //addWords() allows to add words to a dictionary (created or choosen)
 void addWords(char* name, LinkedList* dictionaryList){
     
     char* numberOfWords = malloc(sizeof(char));
+    char* newWord = malloc(sizeof(char)*255);
+    char* wordOfFile = malloc(sizeof(char)*255);
     int nb = 0;
     int count = 0;
     int cpt = 0;
-    char* newWord = malloc(sizeof(char)*255);
     int returnScanf;
     
     do {
@@ -444,7 +449,7 @@ void addWords(char* name, LinkedList* dictionaryList){
                         printf("Your input can contain letters only and 2 minimum ! Please retry\n");
                     }
                 }
-                
+                //qsort(newWord, nb, sizeof(char*), strcmp_alpha);
                 printf("\nYour words have been added succesfully\n");
             }
             else{
