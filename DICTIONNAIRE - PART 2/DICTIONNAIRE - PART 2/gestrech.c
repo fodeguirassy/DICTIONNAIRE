@@ -600,10 +600,10 @@ void capital(char *string)
 }
 
 //compare strings to find different caracter
-int my_strcmp(char* str1, char* str2, int treshold) {
+int my_strcmp(char* str1, char* str2) {
     
     int count = 0;
-    int tmp = 0;
+    //int tmp = 0;
     int i;
     char* str = malloc(sizeof(char));
     char* min = malloc(sizeof(char));
@@ -619,17 +619,20 @@ int my_strcmp(char* str1, char* str2, int treshold) {
 
     min = str1;
     
-    for (i = 0; str[i] != '\0'; i++) {
+    /*for (i = 0; str[i] != '\0'; i++) {
         if(str1[i] == str2[i]){
             tmp++;
         }
         if(tmp == strlen(min)) {
             if(str1[i+1] != str2[i+1]) {
                 count++;
-                /*if(str2[i] > 122) {
-                    count--;
-                }*/
             }
+        }
+    }*/
+    
+    for (i = 0 ; str[i] != '\0' ; i ++) {
+        if(str1[i] != str2[i]) {
+            count++;
         }
     }
     
@@ -659,7 +662,7 @@ void displayWords(int threshold, char* name, LinkedList* dictionarys){
             
             wordFromFile[strcspn(wordFromFile, "\n")] = '\0';
             
-            if(my_strcmp(wordToFind, wordFromFile, threshold) == threshold){
+            if(my_strcmp(wordToFind, wordFromFile) == threshold){
                 printf("%s\n",wordFromFile);
                 displayed = 1;
             }
