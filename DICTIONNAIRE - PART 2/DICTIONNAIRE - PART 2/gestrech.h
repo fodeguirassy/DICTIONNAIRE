@@ -35,7 +35,7 @@ char* getThreshold(char*, LinkedList*);
 void init(char*, LinkedList*);
 void displayWords(int,char*,LinkedList*);
 char* getTheWordToSearch(char*,LinkedList*);
-int my_strcmp(char*, char*);
+int my_strcmp(char*, char*,int);
 void capital(char *);
 
 
