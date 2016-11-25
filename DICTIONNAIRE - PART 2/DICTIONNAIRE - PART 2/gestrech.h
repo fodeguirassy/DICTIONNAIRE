@@ -31,12 +31,12 @@ int checkName(char*);
 void deleteDictionary(char*, LinkedList*);
 void deleteWord(char*);
 
-char* getThreshold();
+char* getThreshold(char*, LinkedList*);
 void init(char*, LinkedList*);
-int getSign(char*);
-int strToThreshold(char*, int);
-void displayWords(int,int,char*,LinkedList*);
+void displayWords(int,char*,LinkedList*);
 char* getTheWordToSearch(char*,LinkedList*);
+int my_strcmp(char*, char*,int);
+void capital(char *);
 
 
 #endif /* gestrech_h */

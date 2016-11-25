@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
-/*#include <sys/xattr.h>*/
 #include "gestbib.h"
 #include <ctype.h>
 #include <regex.h>
@@ -306,7 +305,7 @@ void searchWord(char* name, LinkedList* dictionarys){
         do {
             printf("\nPlease enter the word you would like to find\n");
             getchar();
-            returnScanf = scanf("%[\ea-zA-Z]s",wordToFind);
+            returnScanf = scanf("%[\ea-zA-ZÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸàáâæçèéêëìíîïñòóôœùúûüýÿ'-]s",wordToFind);
             
             if(strcmp(wordToFind, "\e") == 0) {
                 menu2(name, dictionarys);
@@ -395,14 +394,19 @@ void deleteWord(char* name){
     free(wordToDelete);
 }
 
+int strcmp_alpha(const void* str1, const void* str2) {
+    return strcmp(* (char * const *) str1, * (char * const *) str2);
+}
+
 //addWords() allows to add words to a dictionary (created or choosen)
 void addWords(char* name, LinkedList* dictionaryList){
     
     char* numberOfWords = malloc(sizeof(char));
+    char* newWord = malloc(sizeof(char)*255);
+    char* wordOfFile = malloc(sizeof(char)*255);
     int nb = 0;
     int count = 0;
     int cpt = 0;
-    char* newWord = malloc(sizeof(char)*255);
     int returnScanf;
     
     do {
@@ -426,7 +430,7 @@ void addWords(char* name, LinkedList* dictionaryList){
                 nb = atoi(numberOfWords);
                 while(count < nb){
                     getchar();
-                    returnScanf = scanf("%[\ea-z]s",newWord);
+                    returnScanf = scanf("%[\ea-zÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸàáâæçèéêëìíîïñòóôœùúûüýÿ'-]s",newWord);
                     
                     if(strcmp(newWord, "\e") == 0){
                         addWords(name, dictionaryList);
@@ -445,7 +449,7 @@ void addWords(char* name, LinkedList* dictionaryList){
                         printf("Your input can contain letters only and 2 minimum ! Please retry\n");
                     }
                 }
-                
+                //qsort(newWord, nb, sizeof(char*), strcmp_alpha);
                 printf("\nYour words have been added succesfully\n");
             }
             else{
@@ -506,4 +510,5 @@ void deleteDictionary(char* name, LinkedList* dictionaryList) {
         fclose(dictionary);
     }
 }
+
 

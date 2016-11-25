@@ -310,7 +310,7 @@ void searchWord(char* name, LinkedList* dictionarys){
         do {
             printf("\nPlease enter the word you would like to find\n");
             getchar();
-            returnScanf = scanf("%[\ea-zA-Z]s",wordToFind);
+            returnScanf = scanf("%[\ea-zA-ZÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸàáâæçèéêëìíîïñòóôœùúûüýÿ'-]s",wordToFind);
             
             if(strcmp(wordToFind, "\e") == 0) {
                 menu2(name, dictionarys);
@@ -430,7 +430,7 @@ void addWords(char* name, LinkedList* dictionaryList){
                 nb = atoi(numberOfWords);
                 while(count < nb){
                     getchar();
-                    returnScanf = scanf("%[\ea-z]s",newWord);
+                    returnScanf = scanf("%[\ea-zÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸàáâæçèéêëìíîïñòóôœùúûüýÿ'-]s",newWord);
                     
                     if(strcmp(newWord, "\e") == 0){
                         addWords(name, dictionaryList);
@@ -518,39 +518,42 @@ void deleteDictionary(char* name, LinkedList* dictionaryList) {
 // launch the application
 void init(char* name, LinkedList* dictionarys){
     
+    char* retry = malloc(sizeof(char));
+    char* thresholdStr = malloc(sizeof(char));
     int checked = 0;
+    int threshold = 0;
     
-    char* thresholdStr = getThreshold();
+    thresholdStr = getThreshold(name, dictionarys);
+
+    threshold = atoi(thresholdStr);
     
-    int sign = getSign(thresholdStr);
-    
-    int thresholdNumber = strToThreshold(thresholdStr, sign);
-    
-    if(thresholdNumber){
-        displayWords(thresholdNumber, sign, name, dictionarys);
+    if(threshold){
+        displayWords(threshold, name, dictionarys);
         checked = 1;
     }
-    else{
-        char* retry = malloc(sizeof(char));
-        printf("Wrong entry! Would you like to try again? Enter y or n\n");
+    
+    while(!checked){
+        
         do{
+            printf("Wrong entry! Would you like to try again? y/n\n");
             scanf("%s",retry);
-            switch (retry[0]) {
+            switch (*retry) {
                 case 121:
                     init(name,dictionarys);
                     break;
                 case 110:
-                    exit(0);
+                    menu2(name,dictionarys);
                 default:
-                    printf("Wrong entry! Enter y or n\n");
+                    printf("Wrong entry! Please retry\n");
                     break;
             }
-        }while(!checked);
+        }while(*retry != 121 && *retry != 110);
     }
     
 }
+
 // returns the threshold entered by user as
-char* getThreshold(){
+char* getThreshold(char* name, LinkedList* dictionarys){
     
     char* threshold = malloc(sizeof(char)*255);
     int returnScanf = 0;
@@ -558,7 +561,12 @@ char* getThreshold(){
     do{
         printf("\nEnter the treshold you'd like to apply to your research\n");
         getchar();
-        returnScanf = scanf("%[0-9]s",threshold);
+        returnScanf = scanf("%[\e0-9]s",threshold);
+        
+        if(strcmp(threshold, "\e") == 0) {
+            menu2(name, dictionarys);
+        }
+        
         scanf("%*[^\n]");
         
         if(returnScanf == 0) {
@@ -571,92 +579,107 @@ char* getThreshold(){
     
 }
 
-// checks and returns weither the value is greater or less than 0
-int getSign(char* threshold){
-    int result = 0;
+//convert capital letters in tiny letters
+void capital(char *string)
+{
+    int i = 0;
     
-    if(threshold[0] != 45){
-        result = 1;
+    for (i = 0; string[i] != '\0'; i ++)
+    {
+        if (string[i] >= 'A' && string[i] <= 'Z')
+        {
+            string[i] -= 'A' - 'a';
+            string[i] = string[i] - 'A' - 'a';
+        }
     }
-    return result;
 }
 
-//convert the string threshold to an int
-
-int strToThreshold(char* threshold, int sign){
-    int number;
-    char* stringN = malloc(sizeof(char)*255);
+//compare strings to find different caracter
+int my_strcmp(char* str1, char* str2, int treshold) {
     
-    if(!sign){
+    int count = 0;
+    int tmp = 0;
+    int i;
+    char* str = malloc(sizeof(char));
+    char* min = malloc(sizeof(char));
+    
+    capital(str1);
+    capital(str2);
+    
+    if(strlen(str1) < strlen(str2)) {
+        str = str2;
+    }else {
+        str = str1;
+    }
 
-        for(int i = 1, j = 0; i < strlen(threshold);i++, j++){
-            stringN[j] = threshold[i];
+    min = str1;
+    
+    for (i = 0; str[i] != '\0'; i++) {
+        if(str1[i] == str2[i]){
+            tmp++;
         }
-        number = (int)strtol(stringN, NULL, 10);
+        if(tmp == strlen(min)) {
+            if(str1[i+1] != str2[i+1]) {
+                count++;
+                /*if(str2[i] > 122) {
+                    count--;
+                }*/
+            }
+        }
     }
-    else{
-        number = (int)strtol(threshold, NULL, 10);
-    }
-    free(stringN);
     
-    return number;
+    return count;
     
 }
 
 // open dictionary and display words that fit given threshold
-void displayWords(int threshold,int sign, char* name, LinkedList* dictionarys){
+void displayWords(int threshold, char* name, LinkedList* dictionarys){
     
     FILE* dictionary = fopen(name,"r+");
+    char* choice = malloc(sizeof(char) *255);
+    char* wordFromFile = malloc(sizeof(char)*255);
+    char* wordToFind = malloc(sizeof(char) * 255);
+    int displayed = 0;
+    
     if(!dictionary){
         printf("Error while opening dictionary\n");
     }
     else{
         
-        int displayed = 0;
-        
         //executes only if entered word is a real string
-        char* wordToFind = getTheWordToSearch(name,dictionarys);
+        wordToFind = getTheWordToSearch(name,dictionarys);
         
-        char* wordFromFile = malloc(sizeof(char)*255);
+        
         while (fgets(wordFromFile, 255, dictionary)) {
             
             wordFromFile[strcspn(wordFromFile, "\n")] = '\0';
-            if(!sign){
-                if(strcmp(wordToFind, wordFromFile) >= (threshold * (-1)) && strcmp(wordToFind, wordFromFile) <= 0){
-                    printf("%s Difference with %s is %d\n",wordFromFile,wordToFind,(strcmp(wordToFind, wordFromFile)));
-                    displayed = 1;
-                }
-            }
-            else{
-                if(strcmp(wordToFind, wordFromFile) >= 0 && strcmp(wordToFind, wordFromFile) <= threshold){
-                    printf("%s Difference with %s is %d\n",wordFromFile,wordToFind,(strcmp(wordToFind, wordFromFile)));
-                    displayed = 1;
-                }
+
+            if(my_strcmp(wordToFind, wordFromFile, threshold) == threshold){
+                printf("%s\n",wordFromFile);
+                displayed = 1;
             }
         }
 
-        
         free(wordToFind);
         free(wordFromFile);
         
         
         //launch a second try if word to search wasn't found
         if(!displayed){
-            char* choice = malloc(sizeof(char) *255);
             
-            printf("The word you've entered isn't close to any other in this dictionary\n would you like to try with an other word? Enter y or n\n");
+            printf("The word you've entered isn't close to any other in this dictionary would you like to try with an other word? y/n\n");
             do{
                 scanf("%s", choice);
                 
                 switch (choice[0]){
                     case 121:
-                        displayWords(threshold, sign, name, dictionarys);
+                        displayWords(threshold, name, dictionarys);
                         break;
                      case 110 :
-                        exit(0);
+                        menu2(name, dictionarys);
                         break;
                     default:
-                        printf("Enter y or n\n");
+                        printf("Wrong entry ! Please retry\n");
                         break;
                 }
                 
@@ -671,11 +694,12 @@ void displayWords(int threshold,int sign, char* name, LinkedList* dictionarys){
 char* getTheWordToSearch(char* name, LinkedList* dictionarys){
     
     char* word = malloc(sizeof(char)*255);
+    char* choice = malloc(sizeof(char)*255);
     int returnScanf = 0;
     
     printf("Enter the word you would like to work with\n");
     getchar();
-    returnScanf = scanf("%[\ea-zA-Z]s",word);
+    returnScanf = scanf("%[\ea-zA-ZÀÁÂÆÇÈÉÊËÌÍÎÏÑÒÓÔŒÙÚÛÜÝŸàáâæçèéêëìíîïñòóôœùúûüýÿ'-]s",word);
     
     if(strcmp(word, "\e") == 0) {
         getTheWordToSearch(name,dictionarys);
@@ -688,26 +712,24 @@ char* getTheWordToSearch(char* name, LinkedList* dictionarys){
     scanf("%*[^\n]");
     
     if(returnScanf == 0){
-        printf("Please make sure you have entered a coorect word\n");
-        printf("\nWould you like to try again? Enter y or n\n");
-        
-        char* choice = malloc(sizeof(char)*255);
+        printf("Please make sure you have entered a correct word\n");
+        printf("Would you like to try again? y/n\n");
         
         do{
             scanf("%s",choice);
-            switch (choice[0]) {
+            switch (*choice) {
                 case 121:
                     getTheWordToSearch(name,dictionarys);
                     break;
                 case 110:
-                    exit(0);
+                    menu2(name, dictionarys);
                     break;
                 default:
-                    printf("Enter y or n\n");
+                    printf("Wrong entry ! Please retry\n");
                     break;
             }
             
-        }while(choice[0] != 121 && choice[0] != 110);
+        }while(*choice != 121 && *choice != 110);
         
     }
     
