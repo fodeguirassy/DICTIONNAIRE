@@ -53,7 +53,6 @@ LinkedList* newElement(char* v){
     LinkedList* ll = malloc(sizeof(LinkedList));
     ll->value = v;
     ll->next = NULL;
-    
     return ll;
 }
 
@@ -248,6 +247,8 @@ void menu2(char* dictionary , LinkedList* dictionaryList) {
                 break;
             case 52:
                 init(dictionary, dictionaryList);
+                menu2(dictionary,dictionaryList);
+                break;
             case 53:
                 deleteWord(dictionary);
                 menu2(dictionary, dictionaryList);
@@ -514,10 +515,6 @@ void deleteDictionary(char* name, LinkedList* dictionaryList) {
 
 
 
-
-
-
-
 // launch the application
 void init(char* name, LinkedList* dictionarys){
     
@@ -626,13 +623,13 @@ void displayWords(int threshold,int sign, char* name, LinkedList* dictionarys){
             wordFromFile[strcspn(wordFromFile, "\n")] = '\0';
             if(!sign){
                 if(strcmp(wordToFind, wordFromFile) >= (threshold * (-1)) && strcmp(wordToFind, wordFromFile) <= 0){
-                    printf("%s\n",wordFromFile);
+                    printf("%s Difference with %s is %d\n",wordFromFile,wordToFind,(strcmp(wordToFind, wordFromFile)));
                     displayed = 1;
                 }
             }
             else{
                 if(strcmp(wordToFind, wordFromFile) >= 0 && strcmp(wordToFind, wordFromFile) <= threshold){
-                    printf("%s\n",wordFromFile);
+                    printf("%s Difference with %s is %d\n",wordFromFile,wordToFind,(strcmp(wordToFind, wordFromFile)));
                     displayed = 1;
                 }
             }

@@ -15,5 +15,7 @@ int main(int argc, const char * argv[]) {
     
     menu(dictionarys);
     
+    //init(<#char *#>, <#LinkedList *#>)
+    
     return 0;
 }
