@@ -38,5 +38,11 @@ char* getTheWordToSearch(char*,LinkedList*);
 int my_strcmp(char*, char*,int);
 void capital(char *);
 
+int isMissing(char*,char*);
+int getNumberOfMissingElements(char**, char*, char*);
+char** fillMissingWords(int,char*,char*);
+void displayClosers(char*,char**,int);
+void mainMenu();
+
 
 #endif /* gestrech_h */
