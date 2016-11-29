@@ -38,11 +38,12 @@ char* getTheWordToSearch(char*,LinkedList*);
 int my_strcmp(char*, char*);
 void capital(char *);
 
-int isMissing(char*,char*);
-int getNumberOfMissingElements(char**, char*, char*);
-char** fillMissingWords(int,char*,char*);
-void displayClosers(char*,char**,int);
-void mainMenu();
 
-
+//part3
+int getMissingWordsLength(char* testFileName, char* dictioFile);
+int isMissing(char*, char*);
+char** fillMissingWords(int size,char*,char*);
+int getClosedLength(char*, char*);
+char** getCLosedWords(char*, char* string,int);
+void displayCLosedWordsForEach(char**, int, char*);
 #endif /* gestrech_h */

@@ -737,52 +737,98 @@ char* getTheWordToSearch(char* name, LinkedList* dictionarys){
     
 }
 
+
+
+
+
+
+
 //part 3 starts here
+
+
 
 void mainMenu(){
     
     char* textFileName = "source1.txt";
     char* dictionary = "dico1.txt";
     
-    printf("Here are the missing words\n");
-    char** test;
-    int size = getNumberOfMissingElements(test, textFileName, dictionary);
+    int size = getMissingWordsLength(textFileName, dictionary);
     
     char** missingWordsArray = fillMissingWords(size, textFileName, dictionary);
     
-    //printArray(missingWordsArray, size);
-    displayClosers(dictionary, missingWordsArray, size);
+    printf("Here are the missing words\n");
+    printArray(missingWordsArray, size);
     
+    displayCLosedWordsForEach(missingWordsArray, size, dictionary);
     
 }
 
-void displayClosers(char* dictioName, char** array, int size){
-    int i;
+
+void displayCLosedWordsForEach(char**array, int size, char* fileName){
+    
+    printf("\n\nlist of closed words for each missing word\n\n");
+    
+    for(int i = 0; i < size; i++){
+        
+        int nbrOfClosedWords = getClosedLength(array[i], fileName);
+        
+        if(nbrOfClosedWords){
+            char** res = getCLosedWords(fileName,array[i],nbrOfClosedWords);
+            printf("\n\nThe closed words for %s are : \n", array[i]);
+            printArray(res, nbrOfClosedWords);
+        }
+    }
+    
+}
+
+
+
+char** getCLosedWords(char* fileName, char* string, int nbrOfClosedWords){
+    
+    char** result;
+    
+    result = malloc(sizeof(char*) * nbrOfClosedWords);
+    
+    FILE* file = fopen(fileName,"r");
+    
+    if(file){
+        int i = 0;
+        char* wordFromFile = malloc(sizeof(char)*255);
+        
+        while (fgets(wordFromFile, 255, file)) {
+            if(strcmp(wordFromFile, string) == 2){
+                result[i] = malloc(sizeof(char)*255);
+                strcpy(result[i], wordFromFile);
+                i++;
+            }
+        }
+        fclose(file);
+    }
+    return result;
+}
+
+
+int getClosedLength(char* aString, char* fileName){
     
     int closedWords = 0;
     
-    for(i = 0; i < size; i++){
+    FILE* file = fopen(fileName,"r");
+    
+    if(file){
         
-        FILE* file = fopen(dictioName,"r");
+        char* wordFromFile = malloc(sizeof(char)*255);
         
-        if(file){
-            
-            printf("\n\nWords closed to %s are :\n",array[i]);
-            char* wordFromFile = malloc(sizeof(char)*255);
-            
-            while (fgets(wordFromFile, 255, file)) {
-                
-                if(strcmp(wordFromFile, array[i]) == 2){
-                    printf("%s",wordFromFile);
-                    closedWords++;
-                }
+        while (fgets(wordFromFile, 255, file)) {
+            if(strcmp(wordFromFile, aString) == 2){
+                closedWords++;
             }
-            fclose(file);
         }
-        
-        
+        fclose(file);
     }
+    return closedWords;
 }
+
+
 
 char** fillMissingWords(int size, char* fileName, char* dictioFile){
     
@@ -805,7 +851,8 @@ char** fillMissingWords(int size, char* fileName, char* dictioFile){
     }
     return res;
 }
-int getNumberOfMissingElements(char** arrayToFill, char* textFileName, char* dictioFile){
+
+int getMissingWordsLength(char* textFileName, char* dictioFile){
     int missingWords = 0;
     
     FILE* file = fopen(textFileName,"r");
